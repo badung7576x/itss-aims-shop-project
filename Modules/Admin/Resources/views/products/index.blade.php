@@ -209,10 +209,13 @@
                         "width": "8%",
                         "render": ( data, type, row ) => {
                             let editLink = "{{route('admin.product.edit', ':id')}}";
+                            let promotionLink = "{{route('admin.product.promotion', ':id')}}";
                             editLink = editLink.replace(':id', row.id);
+                            promotionLink = promotionLink.replace(':id', row.id);
                             return `
                                 <a type='button' href="${editLink}" class='btn btn-outline-warning btn-sm'><i class="fas fa-edit"></i></a>
                                 <a type='button' href="#" class='btn btn-outline-success btn-sm'><i class="fas fa-eye"></i></a>
+                                <a type='button' href="${promotionLink}" class='btn btn-outline-danger btn-sm'><i class="fas fa-percentage"></i></a>
                             `;
                         },
                     },

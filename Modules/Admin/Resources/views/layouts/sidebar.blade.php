@@ -53,6 +53,29 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link
+                        {{ (request()->is('admin/promotion*')) ?  'active' : '' }}">
+                        <i class="nav-icon fas fa-box"></i>
+                        <p> Chương trình khuyến mại
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('promotion.index')}}" class="nav-link {{ (request()->is('admin/promotion')) ?  'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh sách chương trình </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('promotion.create')}}" class="nav-link {{ (request()->is('admin/promotion/create')) ?  'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Thêm chương trình </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

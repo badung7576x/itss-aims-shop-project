@@ -17,9 +17,9 @@ class CreatePromotionsTable extends Migration
             $table->id();
             $table->string('type');
             $table->string('name');
-            $table->string('description');
-            $table->integer('category_id');
-            $table->integer('product_id');
+            $table->string('description')->nullable();
+            $table->integer('category_id')->nullable();
+            $table->integer('product_id')->nullable();
             $table->integer('discount');
             $table->integer('num_product_discount');
             $table->dateTime('start_at');

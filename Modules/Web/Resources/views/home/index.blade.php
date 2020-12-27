@@ -64,7 +64,7 @@
                                 <div class="woocommerce-LoopProduct-link woocommerce-loop-product__link d-block position-relative">
                                     <div class="woocommerce-loop-product__thumbnail">
                                         <a href="#" class="d-block">
-                                            <img src="{{$product->image}}" class="d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid" alt="image-description" />
+                                            <img src="{{$product->image}}" class="d-block mx-auto attachment-shop_catalog size-shop_catalog wp-post-image img-fluid" style="height: 200px" alt="image-description" />
                                         </a>
                                     </div>
                                     <div class="woocommerce-loop-product__body product__body pt-3 bg-white">
@@ -188,6 +188,7 @@
                 success: function(result){
                     if(result.status) {
                         $('#cart-item').html(result.cartItem);
+                        alert("Thêm vào giỏ hàng thành công");
                     } else {
                         alert(result.message);
                     }

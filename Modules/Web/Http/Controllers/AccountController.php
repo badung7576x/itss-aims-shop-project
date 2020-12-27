@@ -4,12 +4,16 @@ namespace Modules\Web\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Modules\Web\Services\CartService;
+use Modules\Web\Services\OrderService;
+
 class AccountController extends WebBaseController
 {
-    public function __construct(CartService $cartService)
+    protected $orderService;
+    public function __construct(OrderService $orderService)
     {
-        parent::__construct($cartService);
+        $this->orderService = $orderService;
     }
     /**
      * Display a listing of the resource.
@@ -17,6 +21,9 @@ class AccountController extends WebBaseController
      */
     public function index()
     {
-        return view('web::account.order');
+        $user = Auth::user();
+        $orders = $this->orderService->getUserOrders();
+
+        return view('web::account.order', compact('user', 'orders'));
     }
 }

@@ -27,6 +27,5 @@ class UserRepository extends BaseRepository implements UserInterface
     {
         return Auth::user();
     }
-
 }
 

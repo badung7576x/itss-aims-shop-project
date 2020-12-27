@@ -17,4 +17,8 @@ interface CartInterface
     function removeItem(array $conditions);
 
     function updateItem(array $conditions, array $data);
+
+    function getQuantityProductInCart($userId, $productId);
+
+    function clearCart($userId);
 }

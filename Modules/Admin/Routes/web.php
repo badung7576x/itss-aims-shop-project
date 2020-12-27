@@ -14,7 +14,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin', 'middleware'=>'web', 'namespace' => '\Modules\Admin\Http\Controllers'], function() {
-
+    Route::get('/', 'Auth\AdminLoginController@showLoginForm');
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.post-login');
 
@@ -27,6 +27,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>'web', 'namespace' => '\Modules
         Route::get('/product-edit/{id}', 'ProductController@showEditForm')->name('admin.product.edit');
         Route::post('/product-edit', 'ProductController@edit')->name('admin.product.post-edit');
         Route::post('/product-delete', 'ProductController@delete')->name('admin.product.post-delete');
+        Route::get('/product-detail/{id}', 'ProductController@detail')->name('admin.product.detail');
         Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
     });
 

@@ -33,14 +33,14 @@
                                     </div>
 
                                     <div class="js-form-message js-focus-state">
-                                        <label class="form-label">Email*</label>
+                                        <label class="form-label">Email <span style="color: red">*</span></label>
                                         <input type="email" class="form-control rounded-0 height-4 px-4" id="login-mail" name="email" required />
                                     </div>
                                 </div>
 
                                 <div class="form-group mb-4">
                                     <div class="js-form-message js-focus-state">
-                                        <label class="form-label">Mật khẩu *</label>
+                                        <label class="form-label">Mật khẩu <span style="color: red">*</span></label>
                                         <input type="password" class="form-control rounded-0 height-4 px-4" id="login-pass" name="password" required />
                                     </div>
                                 </div>
@@ -65,23 +65,23 @@
                             <div class="p-4 p-md-6">
                                 <div class="form-group mb-4">
                                     <div class="js-form-message js-focus-state">
-                                        <label class="form-label">Họ tên *</label>
-                                        <input type="text" class="form-control rounded-0 height-4 px-4" id="register-name" name="name" required="" />
+                                        <label class="form-label">Họ tên <span style="color: red">*</span></label>
+                                        <input type="text" class="form-control rounded-0 height-4 px-4" id="register-name" name="name" required/>
                                         <p id="register-name-error" style="color: red"></p>
                                     </div>
                                 </div>
 
                                 <div class="form-group mb-4">
                                     <div class="js-form-message js-focus-state">
-                                        <label class="form-label">Số điện thoại *</label>
-                                        <input type="text" class="form-control rounded-0 height-4 px-4" id="register-phonenumber" name="phone_number" required="" />
+                                        <label class="form-label">Số điện thoại <span style="color: red">*</span></label>
+                                        <input type="text" class="form-control rounded-0 height-4 px-4" id="register-phonenumber" name="phone_number" required />
                                         <p id="register-phonenumber-error" style="color: red"></p>
                                     </div>
                                 </div>
 
                                 <div class="form-group mb-4">
                                     <div class="js-form-message js-focus-state">
-                                        <label class="form-label">Email *</label>
+                                        <label class="form-label">Email <span style="color: red">*</span></label>
                                         <input type="email" class="form-control rounded-0 height-4 px-4" id="register-email" name="email" required />
                                         <p id="register-mail-error" style="color: red"></p>
                                     </div>
@@ -89,7 +89,7 @@
 
                                 <div class="form-group mb-4">
                                     <div class="js-form-message js-focus-state">
-                                        <label class="form-label">Mật khẩu *</label>
+                                        <label class="form-label">Mật khẩu <span style="color: red">*</span></label>
                                         <input type="password" class="form-control rounded-0 height-4 px-4" id="register-pass" name="password" required />
                                         <p id="register-pass-error" style="color: red"></p>
                                     </div>
@@ -97,7 +97,7 @@
 
                                 <div class="form-group mb-4">
                                     <div class="js-form-message js-focus-state">
-                                        <label class="form-label">Mật khẩu (Xác nhận) *</label>
+                                        <label class="form-label">Mật khẩu (Xác nhận) <span style="color: red">*</span></label>
                                         <input type="password" class="form-control rounded-0 height-4 px-4" id="register-rpass" name="re_password" required />
                                         <p id="register-rpass-error" style="color: red"></p>
                                     </div>
@@ -165,6 +165,7 @@
                     location.reload();
                 },
                 error: function (result) {
+                    cleanRegisterErrorMessage();
                     let errors = $.parseJSON(result.responseText).errors;
                     if(errors.email) $('#register-mail-error').html(errors.email[0]);
                     if(errors.name) $('#register-name-error').html(errors.name[0]);
@@ -173,6 +174,16 @@
                     if(errors.re_password) $('#register-rpass-error').html(errors.re_password[0]);
                 }
             });
+        }
+
+        function cleanRegisterErrorMessage() {
+            $('#register-pass').val("");
+            $('#register-rpass').val("");
+            $('#register-mail-error').html("");
+            $('#register-name-error').html("");
+            $('#register-phonenumber-error').html("");
+            $('#register-pass-error').html("");
+            $('#register-rpass-error').html("");
         }
 
     </script>

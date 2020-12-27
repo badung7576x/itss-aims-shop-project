@@ -20,7 +20,11 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title"></h3>
+                            <h3 class="card-title">
+                                <h3 class="card-title">
+                                    <a href="javascript:;" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
+                                </h3>
+                            </h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -31,7 +35,7 @@
                                     <div class="form-group col-sm-8">
                                         <label for="">Tên sản phẩm</label>
                                         <input type="hidden" name="id" value="{{$product->id}}">
-                                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" id="title" value="{{old("title", $product->title)}}" placeholder="Nhập tên sản phẩm">
+                                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" id="title" value="{{old("title", $product->title)}}" placeholder="Nhập tên sản phẩm" required>
                                         @error('title')
                                         <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror

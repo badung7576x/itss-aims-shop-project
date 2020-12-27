@@ -7,16 +7,22 @@ namespace Modules\Web\Services;
 use App\Repositories\Cart\CartInterface;
 use App\Repositories\Warehouse\WarehouseInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartService
 {
     protected $cartInterface;
     protected $warehouseInterface;
+    protected $productService;
 
-    public function __construct(CartInterface $cartInterface, WarehouseInterface $warehouseInterface)
+    public function __construct(
+        CartInterface $cartInterface,
+        WarehouseInterface $warehouseInterface,
+        ProductService $productService)
     {
         $this->warehouseInterface = $warehouseInterface;
         $this->cartInterface = $cartInterface;
+        $this->productService = $productService;
     }
 
     public function getQuantityInCart($userId) {
@@ -63,4 +69,26 @@ class CartService
         ];
         $this->cartInterface->updateItem($whereCondition, $updateData);
     }
+
+    public function checkQuantityInCart(array &$messages, array $items = null) {
+        $user = Auth::guard('web')->user();
+        $itemsInCart = $items ?? $this->cartInterface->getItemsAddByUser($user->id);
+        foreach ($itemsInCart as $item) {
+            $result = $this->productService->checkProductQuantity($item->product_id, $item->quantity);
+            if(!$result) {
+                $error['id'] = $item->product_id;
+                $error['message'] = "Số lượng của sản phẩm " . $item->product->title . " hiện tại không đủ. Bạn vui lòng đặt hàng sau!";
+                $messages[] = $error;
+            }
+        }
+
+        return count($messages) <= 0;
+    }
+
+    public function getTotalAmountInCart($itemsInCart) {
+        return collect($itemsInCart)->sum(function($item){
+            return $item->product->price * $item->quantity;
+        });
+    }
+
 }

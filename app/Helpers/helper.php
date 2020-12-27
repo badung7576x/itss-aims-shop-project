@@ -20,3 +20,15 @@ if (!function_exists('calculate_total_price')) {
         return $result;
     }
 }
+
+if (!function_exists('get_order_status')) {
+
+    function get_order_status($orderStatus)
+    {
+        $message = '';
+        if($orderStatus === ORDER_SUCCESS) $message = "Đặt hàng thành công";
+        if($orderStatus === ORDER_FAILURE) $message = "Đặt hàng thất bại";
+        if($orderStatus === ORDER_PAID) $message = "Thanh toán thành công";
+        return $message;
+    }
+}

@@ -30,7 +30,7 @@
                                 <div class="row">
                                     <div class="form-group col-sm-8">
                                         <label for="">Tên sản phẩm</label>
-                                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" id="title" value="{{old("title", "")}}" placeholder="Nhập tên sản phẩm">
+                                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" id="title" value="{{old("title", "")}}" placeholder="Nhập tên sản phẩm" required>
                                         @error('title')
                                         <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
@@ -77,8 +77,8 @@
                                     <div class="form-group col-sm-3">
                                         <label for="">Trạng thái</label>
                                         <select class="form-control" name="status">
-                                            <option value="1" @if(old('status') == 1) selected @endif>Hiển thị</option>
                                             <option value="0" @if(old('status') == 0) selected @endif>Không hiển thị</option>
+                                            <option value="1" @if(old('status') == 1) selected @endif>Hiển thị</option>
                                         </select>
                                     </div>
                                 </div>

@@ -4,10 +4,10 @@
     <div class="site-content bg-punch-light overflow-hidden mt-12" id="content">
         <div class="container">
             <header class="entry-header space-top-2 space-bottom-1 mb-2">
-                <h1 class="entry-title font-size-7">Giỏ hàng của bạn: {{$quantityInCart ?? 0}} sản phẩm</h1>
+                <h1 class="entry-title font-size-7">Giỏ hàng của bạn: <span id="qtyInCart">{{$quantityInCart ?? 0}}</span> sản phẩm</h1>
             </header>
             <div class="row pb-8">
-                <div id="primary" class="content-area mr-4">
+                <div id="primary" class="content-area col-md-9">
                     <main id="main" class="site-main ">
                         <div class="page type-page status-publish hentry">
 
@@ -159,6 +159,7 @@
                         totalAmount = totalAmount - quantity * price;
                         $('#total-amount').html(formatPrice(totalAmount));
                         $('#cart-item').html(result.cartItem);
+                        $('#qtyInCart').html(parseInt($('#qtyInCart').text()) - 1);
                     } else {
                         alert(result.message);
                     }
@@ -192,7 +193,7 @@
                     if(result.status) {
                         alert(result.message);
                     } else {
-                        alert(result.message.toString());
+                        alert(result.message.join("\n"));
                     }
                 },
             });

@@ -44,7 +44,7 @@
                                                         <tbody>
                                                         @foreach($product->properties as $property)
                                                         <tr>
-                                                            <th>{{$property->property_type->property_name}}</th>
+                                                            <th width="25%">{{$property->property_type->property_name}}</th>
                                                             <td>{{$property->value}}</td>
                                                         </tr>
                                                         @endforeach
@@ -71,7 +71,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <label class="screen-reader-text sr-only">Số lượng</label>
                                                                 <span class="js-minus text-dark" id="decrement"><i class="fas fa-minus"></i></span>
-                                                                <input type="text" class="input-text qty text js-result form-control text-center border-0" pattern="[\d]" id="quantity" name="quantity" value="1" title="Qty" />
+                                                                <input type="text" class="input-text qty text js-result form-control text-center border-0" pattern="[\d]" id="quantity" name="quantity" value="1" />
                                                                 <span class="js-plus text-dark" id="increment"><i class="fas fa-plus"></i></span>
                                                             </div>
                                                         </div>
@@ -106,6 +106,7 @@
                 success: function(result){
                     if(result.status) {
                         $('#cart-item').html(result.cartItem);
+                        alert("Thêm vào giỏ hàng thành công");
                     } else {
                         alert(result.message);
                     }

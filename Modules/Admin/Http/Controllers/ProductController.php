@@ -42,8 +42,9 @@ class ProductController extends Controller
     public function renderPropertyForm(Request $request) {
         if($request->ajax()) {
             $categoryId = $request->get('category_id');
+            $oldDatas = $request->get('old_data');
             $propertyTypes = $this->productService->getPropertyTypeByCategoryId($categoryId);
-            $propertyForm = view('admin::products.property-form', compact('propertyTypes'))->render();
+            $propertyForm = view('admin::products.property-form', compact('propertyTypes', 'oldDatas'))->render();
             return response()->json(compact('propertyForm'));
         } else {
             return response()->json([]);
@@ -63,6 +64,7 @@ class ProductController extends Controller
 
     public function delete(Request $request) {
         $ids = $request->get('ids');
+        if(empty($ids)) return back();
         $this->productService->deleteMultiProduct($ids);
 
         return redirect()->route('admin.product.list');
@@ -77,13 +79,15 @@ class ProductController extends Controller
 
     public function updateChoosePromotion(Request $request)
     {
-        dd($request);
-        $id = $request->promotion_id;
+        $id = $request->get('promotion_id');
         $data = $request->all();
         $promotion =  $this->productService->updatePromotion($data,$id);
         return redirect()->route('promotion.index');
     }
 
+    public function detail(Request $request, $id) {
+        $product = $this->productService->getProductById($id);
 
-    
+        return view('admin::products.detail', compact('product'));
+    }
 }

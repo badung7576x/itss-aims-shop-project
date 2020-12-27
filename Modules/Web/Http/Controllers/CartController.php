@@ -18,51 +18,41 @@ class CartController extends WebBaseController
     }
 
     public function showCart() {
-        $user = Auth::guard('web')->user();
-        if(empty($user)) {
+        if(empty($this->user)) {
             return redirect()->route('home');
         }
-        $itemsInCart = $this->cartService->getItemsAddByUser($user->id);
-        $totalAmount = collect($itemsInCart)->sum(function($item){
-            return $item->product->price * $item->quantity;
-        });
+        $itemsInCart = $this->cartService->getItemsAddByUser($this->user->id);
+        $totalAmount = $this->cartService->getTotalAmountInCart($itemsInCart);
+
         return view('web::cart.index', compact('itemsInCart', 'totalAmount'));
     }
 
     public function updateCart(Request $request) {
-        $user = Auth::guard('web')->user();
         $items = $request->get('items');
-        $message = [];
+        $messages = [];
         foreach ($items as $item) {
             $item = (object) $item;
             $result = $this->productService->checkProductQuantity($item->product_id, $item->quantity);
             if(!$result) {
-                $message[] = "Số lượng của sản phẩm " . $item->title . " hiện tại không đủ. Bạn vui lòng đặt hàng sau!";
+                $error['id'] = $item->product_id;
+                $error['message'] = "Số lượng của sản phẩm " . $item->title . " hiện tại không đủ. Bạn vui lòng đặt hàng sau!";
+                $messages[] = $error;
             } else {
-                $this->cartService->updateCart($user->id, $item);
+                $this->cartService->updateCart($this->user->id, $item);
             }
         }
-        if (empty($message)) return response()->json(['status' => true, 'message' => "Cập nhật giỏ hàng thành công!"]);
-        return response()->json(['status' => false, 'message' => $message]);
+        if (empty($messages)) return response()->json(['status' => true, 'message' => "Cập nhật giỏ hàng thành công!"]);
+        return response()->json(['status' => false, 'message' => $messages]);
     }
 
     public function removeItemInCart(Request $request) {
-        $user = Auth::guard('web')->user();
-        $result = $this->cartService->removeItemInCart($request, $user);
+        $result = $this->cartService->removeItemInCart($request, $this->user);
         if($result) {
-            $quantityInCart = $this->cartService->getQuantityInCart($user->id);
+            $quantityInCart = $this->cartService->getQuantityInCart($this->user->id);
             $cartItem = view('web::layouts.cart-item', compact('quantityInCart'))->render();
             return response()->json(['status' => true, 'cartItem' => $cartItem]);
         }
         return response()->json(['status' => false, 'message' => "Không thể xóa sản phẩm khỏi giỏ hàng!"]);
-    }
-
-    public function checkout() {
-        return view('web::checkout.index');
-    }
-
-    public function checkoutSuccess() {
-        return view('web::checkout.success');
     }
 
     public function addProductToCart(Request $request) {

@@ -20,14 +20,14 @@ Route::group(['prefix' => '/', 'middleware'=>'web', 'namespace' => '\Modules\Web
     Route::get('/search', 'ProductController@search')->name('product.search');
     Route::post('/login', 'Auth\LoginController@login')->name('web.post-login');
     Route::post('/register', 'Auth\RegisterController@register')->name('web.post-register');
-
+    Route::post('/add-cart', 'CartController@addProductToCart')->name('product.add-cart');
     Route::group(['middleware' => 'guest:web'], function () {
-        Route::post('/add-cart', 'CartController@addProductToCart')->name('product.add-cart');
         Route::get('/cart', 'CartController@showCart')->name('product.show-cart');
         Route::post('/update-cart', 'CartController@updateCart')->name('product.update-cart');
         Route::post('/remove-cart', 'CartController@removeItemInCart')->name('product.remove-item');
-        Route::get('/checkout', 'CartController@checkout')->name('web.checkout');
-        Route::get('/checkout-success', 'CartController@checkoutSuccess')->name('web.checkout.success');
+        Route::get('/checkout', 'CheckoutController@checkout')->name('web.checkout');
+        Route::post('/checkout', 'CheckoutController@postCheckout')->name('web.post-checkout');
+        Route::get('/checkout-success', 'CheckoutController@checkoutSuccess')->name('web.checkout.success');
         Route::get('/account', 'AccountController@index')->name('account');
         Route::get('/logout', 'Auth\LoginController@logout')->name('web.logout');
     });

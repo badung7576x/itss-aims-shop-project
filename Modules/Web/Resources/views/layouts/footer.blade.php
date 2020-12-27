@@ -5,8 +5,8 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <div>
-                            <h5 class="font-size-7 font-weight-medium text-white">Join Our Newsletter</h5>
-                            <p class="text-white font-size-2 mb-0">Signup to be the first to hear about exclusive deals, special offers and upcoming collections</p>
+                            <h5 class="font-size-7 font-weight-medium text-white">Liên hệ với chúng tôi</h5>
+                            <p class="text-white font-size-2 mb-0">ĐĂNG KÝ NHẬN EMAIL THÔNG BÁO KHUYẾN MẠI HOẶC ĐỂ ĐƯỢC TƯ VẤN MIỄN PHÍ</p>
                         </div>
                     </div>
                     <div class="col-lg-5">
@@ -20,7 +20,7 @@
                                                 class="form-control font-size-2 px-5 py-2 rounded-md border-0 height-60"
                                                 name="name"
                                                 id="signupSrName"
-                                                placeholder="Enter email for weekly newsletter."
+                                                placeholder="Nhập địa chỉ email của bạn"
                                                 aria-label="Your name"
                                                 required=""
                                                 data-msg="Name must contain only letters."
@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-2 ml-2">
-                                    <button type="submit" class="btn btn-dark btn-wide py-2 height-60 font-weight-medium">Subscribe</button>
+                                    <button type="submit" class="btn btn-dark btn-wide py-2 height-60 font-weight-medium" style="width: 180px">Đăng ký</button>
                                 </div>
                             </div>
                         </div>

@@ -115,7 +115,7 @@
                 "paging": true,
                 "lengthChange": false,
                 "autoWidth": false,
-                "pageLength": "25",
+                "pageLength": 15,
                 "responsive": true,
                 "order": [[0, 'asc']],
                 "select": {
@@ -124,22 +124,21 @@
                 },
                 "data": data,
                 "columns": [
-                    { "title": "", "defaultContent": ""},
-                    { "title": "Hình ảnh"},
-                    { "title": "Tên"},
-                    { "title": "Loại sản phẩm"},
-                    { "title": "Giá gốc"},
-                    { "title": "Giá khuyến mãi"},
-                    { "title": "Số lượng"},
-                    { "title": "Trạng thái"},
-                    { "title": "Thao tác"}
+                    { "title": "", "defaultContent": "", "width": "5%"},
+                    { "title": "Hình ảnh", "width": "8%"},
+                    { "title": "Tên", "width": "15%"},
+                    { "title": "Loại sản phẩm", "width": "10%"},
+                    { "title": "Giá gốc", "width": "10%"},
+                    { "title": "Giá khuyến mãi", "width": "10%"},
+                    { "title": "Số lượng", "width": "10%"},
+                    { "title": "Trạng thái", "width": "4%"},
+                    { "title": "Thao tác", "width": "8%"}
                 ],
                 "columnDefs": [
                     {
                         "targets":   0,
                         "orderable": false,
                         "className": 'text-center align-middle',
-                        "width": "5%",
                         'render': ( data, type, row ) => {
                             return `<input type="checkbox" name="ids[]" value="${row.id}">`;
                         }
@@ -154,7 +153,6 @@
                     {
                         "targets": 2,
                         "className": "align-middle",
-                        "width": "10%",
                         "render": ( data, type, row ) => {
                             return `${row.title}`;
                         },
@@ -162,7 +160,6 @@
                     {
                         "targets": 3,
                         "className": "text-center align-middle",
-                        "width": "10%",
                         "render": ( data, type, row ) => {
                             return `${row.category.name}`;
                         },
@@ -170,7 +167,6 @@
                     {
                         "targets": 4,
                         "className": "text-center align-middle",
-                        "width": "10%",
                         "render": ( data, type, row ) => {
                             return `${row.value}đ`;
                         },
@@ -178,7 +174,6 @@
                     {
                         "targets": 5,
                         "className": "text-center align-middle",
-                        "width": "10%",
                         "render": ( data, type, row ) => {
                             return `${row.price}đ`;
                         },
@@ -186,7 +181,6 @@
                     {
                         "targets": 6,
                         "className": "text-center align-middle",
-                        "width": "5%",
                         "render": ( data, type, row ) => {
                             return `${ row.quantity != null ? row.quantity.quantity : "0"}`;
                         },
@@ -194,7 +188,6 @@
                     {
                         "targets": 7,
                         "className": "text-center align-middle",
-                        "width": "8%",
                         "render": ( data, type, row ) => {
                             return `
                                 ${ row. status == 1 ?
@@ -209,23 +202,20 @@
                         "width": "8%",
                         "render": ( data, type, row ) => {
                             let editLink = "{{route('admin.product.edit', ':id')}}";
-                            let promotionLink = "{{route('admin.product.promotion', ':id')}}";
                             editLink = editLink.replace(':id', row.id);
+                            let promotionLink = "{{route('admin.product.promotion', ':id')}}";
                             promotionLink = promotionLink.replace(':id', row.id);
+                            let detailLink = "{{route('admin.product.detail', ':id')}}";
+                            detailLink = detailLink.replace(':id', row.id);
                             return `
                                 <a type='button' href="${editLink}" class='btn btn-outline-warning btn-sm'><i class="fas fa-edit"></i></a>
-                                <a type='button' href="#" class='btn btn-outline-success btn-sm'><i class="fas fa-eye"></i></a>
+                                <a type='button' href="${detailLink}" class='btn btn-outline-success btn-sm'><i class="fas fa-eye"></i></a>
                                 <a type='button' href="${promotionLink}" class='btn btn-outline-danger btn-sm'><i class="fas fa-percentage"></i></a>
                             `;
                         },
                     },
                 ]
             });
-            // table.on('order.dt search.dt', function () {
-            //     table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-            //         cell.innerHTML = i + 1;
-            //     });
-            // }).draw();
         }
 
         function deleteProducts() {

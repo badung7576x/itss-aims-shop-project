@@ -15,6 +15,10 @@ use App\Repositories\Property\PropertyInterface;
 use App\Repositories\Property\PropertyRepository;
 use App\Repositories\PropertyType\PropertyTypeInterface;
 use App\Repositories\PropertyType\PropertyTypeRepository;
+use App\Repositories\ShipInfo\ShipInfoInterface;
+use App\Repositories\ShipInfo\ShipInfoRepository;
+use App\Repositories\Order\OrderInterface;
+use App\Repositories\Order\OrderRepository;
 use App\Repositories\User\UserInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Warehouse\WarehouseInterface;
@@ -39,6 +43,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(CartInterface::class, CartRepository::class);
         $this->app->singleton(UserInterface::class, UserRepository::class);
         $this->app->singleton(PromotionInterface::class, PromotionRepository::class);
+        $this->app->singleton(ShipInfoInterface::class, ShipInfoRepository::class);
+        $this->app->singleton(OrderInterface::class, OrderRepository::class);
     }
 
     /**

@@ -25,7 +25,8 @@ class ProductController extends WebBaseController
     {
         $products = $this->productService->getListProducts();
         $categories = $this->productService->getCategories();
-        return view('web::home.index', compact('products', 'categories'));
+        $promotions = $this->productService->getAllPromotions();
+        return view('web::home.index', compact('products', 'categories','promotions'));
     }
 
     public function showDetail(Request $request, int $id){
@@ -39,7 +40,8 @@ class ProductController extends WebBaseController
         $keyword = $request->get('keyword');
         $categories = $this->productService->getCategories();
         $products = $this->productService->getListProductByKeyword($categoryId, $keyword);
-        return view('web::home.index', compact('products', 'categories', 'categoryId', 'keyword'));
+        $promotions = $this->productService->getAllPromotions();
+        return view('web::home.index', compact('products', 'categories', 'categoryId', 'keyword','promotions'));
     }
 }
 

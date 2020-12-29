@@ -7,6 +7,7 @@ namespace Modules\Web\Services;
 use App\Repositories\Cart\CartInterface;
 use App\Repositories\Category\CategoryInterface;
 use App\Repositories\Product\WebProductInterface;
+use App\Repositories\Promotion\PromotionInterface;
 use App\Repositories\Warehouse\WarehouseInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,16 +17,20 @@ class ProductService
     protected $productInterface;
     protected $categoryInterface;
     protected $warehouseInterface;
+    protected $promotionInterface;
     protected $cartInterface;
 
     public function __construct(
         WebProductInterface $productInterface,
         CategoryInterface $categoryInterface,
         WarehouseInterface $warehouseInterface,
+        PromotionInterface $promotionInterface,
         CartInterface $cartInterface) {
+
         $this->productInterface = $productInterface;
         $this->categoryInterface = $categoryInterface;
         $this->warehouseInterface = $warehouseInterface;
+        $this->promotionInterface = $promotionInterface;
         $this->cartInterface = $cartInterface;
     }
 
@@ -56,6 +61,10 @@ class ProductService
             $products = $this->productInterface->getListProductsWithKeyword($keyword, $categoryId);
         }
         return $products;
+    }
+
+    public function getAllPromotions() {
+        return $this->promotionInterface->getAll();
     }
 
 }

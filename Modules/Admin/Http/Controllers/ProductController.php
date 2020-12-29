@@ -36,7 +36,6 @@ class ProductController extends Controller
 
     public function create(ProductCRUDRequest $request) {
         $this->productService->createProduct($request->all());
-
         return redirect()->route('admin.product.list');
     }
 
@@ -60,7 +59,6 @@ class ProductController extends Controller
 
     public function edit(ProductCRUDRequest $request) {
         $this->productService->updateProduct($request->all());
-
         return redirect()->route('admin.product.list');
     }
 
@@ -70,6 +68,21 @@ class ProductController extends Controller
         $this->productService->deleteMultiProduct($ids);
 
         return redirect()->route('admin.product.list');
+    }
+
+    public function showChoosePromotion($productId)
+    {
+        $product = $this->productService->getProductById($productId);
+        $promotions = $this->productService->getListPromotions();
+        return view('admin::products.choose-promotion', compact('product', 'promotions','productId'));
+    }
+
+    public function updateChoosePromotion(Request $request)
+    {
+        $id = $request->get('promotion_id');
+        $data = $request->all();
+        $promotion =  $this->productService->updatePromotion($data,$id);
+        return redirect()->route('promotion.index');
     }
 
     public function detail(Request $request, $id) {

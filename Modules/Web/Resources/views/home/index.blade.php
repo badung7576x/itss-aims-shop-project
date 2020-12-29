@@ -107,7 +107,7 @@
         <div class="space-bottom-3 space-bottom-lg-4">
             <div class="container">
                 <header class="mb-5 d-md-flex align-items-center">
-                    <h2 class="font-size-7 mb-3 mb-md-0">Deals of the week</h2>
+                    <h2 class="font-size-7 mb-3 mb-md-0">Promotion</h2>
                     <div class="mb-3 mb-md-0 ml-md-4 bg-primary rounded-md py-1 text-lh-lg px-3 d-flex text-white font-weight-medium">
                         <div class="days mx-2">114</div>
                         <div class="hrs mx-2">03</div>
@@ -116,60 +116,40 @@
                     </div>
                 </header>
                 <div class="row">
-                    <div class="slick-list col-6">
-                        <div class="slick-track">
-                            <div class="product product__card product__space product__space-primary border rounded-md bg-white">
-                                <div class="media p-3 p-md-4d875">
-                                    <a href="#" class="d-block" tabindex="0"><img src="{{asset('web/images/img1(5).jpg')}}" alt="image-description" /></a>
-                                    <div class="media-body ml-4d875">
-                                        <div class="text-uppercase font-size-1 mb-1 text-truncate"><a href="#single-product-v3.html" tabindex="0">Hard Cover</a></div>
-                                        <h2 class="woocommerce-loop-product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
-                                            <a href="#single-product-v3.html" tabindex="0">The Rural Diaries: Love, Livestock, and Big Life Lessons Down on Mischief Farm</a>
-                                        </h2>
-                                        <div class="font-size-2 mb-1 text-truncate"><a href="#authors-single.html" class="text-gray-700" tabindex="0">Hillary Burton</a></div>
-                                        <div class="price d-flex align-items-center font-weight-medium font-size-3 mb-3">
-                                            <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>15</span>
-                                        </div>
-                                        <div class="deal-progress">
-                                            <div class="d-flex justify-content-between font-size-2 mb-2d75">
-                                                <span>Đã bán: 14</span>
+                    @foreach($promotions as $promotion)
+                        @if ($promotion->product_id)
+                        @php
+                            $product = \App\Entities\Product::find($promotion->product_id);
+                        @endphp
+                        <div class="slick-list col-6">
+                            <div class="slick-track">
+                                <div class="product product__card product__space product__space-primary border rounded-md bg-white">
+                                    <div class="media p-3 p-md-4d875">
+                                        <a href="#" class="d-block" tabindex="0"><img src="{{asset('web/images/img1(5).jpg')}}" alt="image-description" /></a>
+                                        <div class="media-body ml-4d875">
+                                            <div class="text-uppercase font-size-1 mb-1 text-truncate"><a href="#single-product-v3.html" tabindex="0">Hard Cover</a></div>
+                                            <h2 class="woocommerce-loop-product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
+                                                <a href="{{route('product.detail', $product->id ?? NULL)}}">{{$product->title}}</a>
+                                            </h2>
+                                            <div class="font-size-2 mb-1 text-truncate"><a href="#authors-single.html" class="text-gray-700" tabindex="0">{{$product->title}}</a></div>
+                                            <div class="price d-flex align-items-center font-weight-medium font-size-3 mb-3">
+                                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>15</span>
                                             </div>
-                                            <div class="progress height-7">
-                                                <div class="progress-bar bg-dark" role="progressbar" style="width: 82%;" aria-valuenow="14" aria-valuemin="0" aria-valuemax="17"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slick-list col-6">
-                        <div class="slick-track">
-                            <div class="product product__card product__space product__space-primary border rounded-md bg-white">
-                                <div class="media p-3 p-md-4d875">
-                                    <a href="#" class="d-block" tabindex="0"><img src="{{asset('web/images/img1(5).jpg')}}" alt="image-description" /></a>
-                                    <div class="media-body ml-4d875">
-                                        <div class="text-uppercase font-size-1 mb-1 text-truncate"><a href="#single-product-v3.html" tabindex="0">Hard Cover</a></div>
-                                        <h2 class="woocommerce-loop-product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
-                                            <a href="#single-product-v3.html" tabindex="0">The Rural Diaries: Love, Livestock, and Big Life Lessons Down on Mischief Farm</a>
-                                        </h2>
-                                        <div class="font-size-2 mb-1 text-truncate"><a href="#authors-single.html" class="text-gray-700" tabindex="0">Hillary Burton</a></div>
-                                        <div class="price d-flex align-items-center font-weight-medium font-size-3 mb-3">
-                                            <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>15</span>
-                                        </div>
-                                        <div class="deal-progress">
-                                            <div class="d-flex justify-content-between font-size-2 mb-2d75">
-                                                <span>Đã bán: 14</span>
-                                            </div>
-                                            <div class="progress height-7">
-                                                <div class="progress-bar bg-dark" role="progressbar" style="width: 82%;" aria-valuenow="14" aria-valuemin="0" aria-valuemax="17"></div>
+                                            <div class="deal-progress">
+                                                <div class="d-flex justify-content-between font-size-2 mb-2d75">
+                                                    <span>Đã bán: 14</span>
+                                                </div>
+                                                <div class="progress height-7">
+                                                    <div class="progress-bar bg-dark" role="progressbar" style="width: 82%;" aria-valuenow="14" aria-valuemin="0" aria-valuemax="17"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>

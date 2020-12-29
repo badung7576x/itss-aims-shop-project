@@ -9,6 +9,8 @@ use App\Repositories\Product\AdminProductInterface;
 use App\Repositories\Property\PropertyInterface;
 use App\Repositories\PropertyType\PropertyTypeInterface;
 use App\Repositories\Warehouse\WarehouseInterface;
+use App\Repositories\Promotion\PromotionInterface;
+
 use Illuminate\Support\Facades\DB;
 
 class ProductService
@@ -18,19 +20,22 @@ class ProductService
     protected $propertyTypeInterface;
     protected $propertyInterface;
     protected $warehouseInterface;
+    protected $promotionInterface;
 
     public function __construct(
         AdminProductInterface $productInterface,
         CategoryInterface $categoryInterface,
         PropertyTypeInterface $propertyTypeInterface,
         PropertyInterface $propertyInterface,
-        WarehouseInterface $warehouseInterface
+        WarehouseInterface $warehouseInterface,
+        PromotionInterface $promotionInterface
         ) {
             $this->productInterface = $productInterface;
             $this->categoryInterface = $categoryInterface;
             $this->propertyTypeInterface = $propertyTypeInterface;
             $this->propertyInterface = $propertyInterface;
             $this->warehouseInterface = $warehouseInterface;
+            $this->promotionInterface = $promotionInterface;
     }
 
     public function getListProducts() {
@@ -115,4 +120,47 @@ class ProductService
         }
     }
 
+    public function getListPromotions() {
+        return $this->promotionInterface->getAll();
+    }
+
+    public function createPromotion(array $data) {
+        DB::beginTransaction();
+        $promotionInfo = [
+            'type' => $data['type'],
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'discount' => $data['discount'],
+            'num_product_discount' => 0,
+            'start_at' => $data['start_at'],
+            'end_at' => $data['end_at'],
+        ];
+        $result = $this->promotionInterface->create($promotionInfo);
+        DB::commit();
+    }
+
+    public function getPromotion($id) {
+        return $this->promotionInterface->getPromotionById($id);
+    }
+
+    public function updatePromotion(array $data, $id) {
+        return $promotion =  $this->promotionInterface->update( $id, $data);
+        dd($promotion);
+        // return  $promotion =  $this->promotionInterface->getPromotionById($id)->update([
+        //     'type' => $data['type'],
+        //     'name' => $data['name'],
+        //     'description' => $data['description'],
+        //     'discount' => $data['discount'],
+        //     'product_id' => $data['product_id'],
+        //     'category_id' => $data['category_id'],
+        //     'num_product_discount' => $data['num_product_discount'],
+        //     'start_at' => $data['start_at'],
+        //     'end_at' => $data['end_at'],
+        // ]);
+    }
+
+    public function deletePromotion($id)
+    {
+        $this->promotionInterface->deletePromotion($id);
+    }
 }

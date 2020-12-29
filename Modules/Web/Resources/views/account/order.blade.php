@@ -106,8 +106,8 @@
                                         <td class="align-middle py-5">{{\App\Helpers\get_order_status($order->order_status)}}</td>
                                         <td class="align-middle py-5">
                                             <div class="d-flex justify-content-center">
-                                                <button type="submit" class="btn btn-dark rounded-0 btn-wide font-weight-medium">Xem
-                                                </button>
+                                                <a href="{{route('account.order.detail', $order->id)}}" class="btn btn-dark rounded-0 btn-wide font-weight-medium" style="color: white">Xem
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>

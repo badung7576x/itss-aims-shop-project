@@ -48,6 +48,11 @@ class OrderRepository extends BaseRepository implements OrderInterface
         return $this->_model->where('user_id', $userId)->with('order_items')->latest()->first();
     }
 
+    public function getOrderById($id)
+    {
+        return $this->find($id);
+    }
+
     public function getUserOrders($userId)
     {
         return $this->_model->where('user_id', $userId)->get();

@@ -11,4 +11,6 @@ interface OrderInterface
     public function getLatestOrder($userId);
 
     public function getUserOrders($userId);
+
+    public function getOrderById($id);
 }

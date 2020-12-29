@@ -19,17 +19,12 @@ class CheckoutService
 
     public function __construct(
         UserInterface $userInterface,
-        ShipInfoInterface $shipInfoInterface,
         CartInterface $cartInterface,
         OrderInterface $orderInterface)
     {
         $this->userInterface = $userInterface;
-        $this->shipInfoInterface = $shipInfoInterface;
         $this->cartInterface = $cartInterface;
         $this->orderInterface = $orderInterface;
-    }
-    public function getShipInfo() {
-        return $this->shipInfoInterface->getShipInfo();
     }
 
     public function checkoutCart($request) {

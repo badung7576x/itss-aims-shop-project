@@ -54,7 +54,7 @@ class CheckoutController extends WebBaseController
         $order = $this->checkoutService->getLatestOrder();
         $user = Auth::guard('web')->user();
         $shipInfo = $this->shipInfoService->getShipInfo();
-//        dd($order);
+
         return view('web::checkout.success', compact('order', 'user', 'shipInfo'));
     }
 }

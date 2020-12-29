@@ -5,7 +5,6 @@ namespace Modules\Web\Services;
 
 
 use App\Repositories\Cart\CartInterface;
-use App\Repositories\ShipInfo\ShipInfoInterface;
 use App\Repositories\Order\OrderInterface;
 use App\Repositories\User\UserInterface;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +26,8 @@ class CheckoutService
         $this->orderInterface = $orderInterface;
     }
 
-    public function checkoutCart($request) {
+    public function checkoutCart($request)
+    {
         $user = Auth::user();
         $creditInfo = $request['credit'];
         $paymentService = new PaymentService($creditInfo);
@@ -37,28 +37,29 @@ class CheckoutService
         }
 
         $itemsInCart = $this->cartInterface->getItemsAddByUser($user->id);
-        $total = collect($itemsInCart)->sum(function($item){
+        $total = collect($itemsInCart)->sum(function ($item) {
             return $item->product->price * $item->quantity;
         });
         // Create order
         $orderInfo = [
-            'order_no'          => "N" . date('Ymd-Hmi'),
-            'user_id'           => $user->id,
-            'note'              => $request['note'],
-            'shipping_amount'   => 0,
-            'order_amount'      => $total,
-            'payment_type'      => 1,
-            'shipping_type'     => 1,
-            'payment_status'    => $result['status'],
-            'order_status'      => ORDER_SUCCESS,
-            'ordered_at'        => now()
+            'order_no' => "N" . date('Ymd-Hmi'),
+            'user_id' => $user->id,
+            'note' => $request['note'],
+            'shipping_amount' => 0,
+            'order_amount' => $total,
+            'payment_type' => 1,
+            'shipping_type' => 1,
+            'payment_status' => $result['status'],
+            'order_status' => ORDER_SUCCESS,
+            'ordered_at' => now()
         ];
         $this->orderInterface->createOrder($orderInfo, $itemsInCart);
         // Clear cart
         $this->cartInterface->clearCart($user->id);
     }
 
-    public function getLatestOrder() {
+    public function getLatestOrder()
+    {
         $user = Auth::user();
         return $this->orderInterface->getLatestOrder($user->id);
     }

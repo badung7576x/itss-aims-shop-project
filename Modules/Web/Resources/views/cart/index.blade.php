@@ -190,10 +190,15 @@
                     items: data,
                 },
                 success: function(result){
+                    console.log(result);
                     if(result.status) {
                         alert(result.message);
                     } else {
-                        alert(result.message.join("\n"));
+                        let messages = '';
+                        if(Array.isArray(result.message)) {
+                            result.message.forEach((item) => messages += item.message + "\n");
+                        }
+                        alert(messages);
                     }
                 },
             });

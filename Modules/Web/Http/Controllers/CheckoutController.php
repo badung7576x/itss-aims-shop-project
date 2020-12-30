@@ -23,10 +23,14 @@ class CheckoutController extends WebBaseController
         $messages = [];
         $canCheckout = $this->cartService->checkQuantityInCart($messages);
         if(!$canCheckout) {
-            return redirect()->back()->with(['message' => $messages]);
+            return redirect()->back()->with(['status' => false, 'message' => $messages]);
         }
 
         $itemsInCart = $this->cartService->getItemsAddByUser($this->user->id);
+        if(count($itemsInCart) <= 0) {
+            return redirect()->back()->with(['status' => false, 'message' => "Giỏ hàng trống! Không thể đặt hàng"]);
+        }
+
         $totalAmount = $this->cartService->getTotalAmountInCart($itemsInCart);
         $shipInfo = $this->checkoutService->getShipInfo();
 
@@ -35,12 +39,15 @@ class CheckoutController extends WebBaseController
 
     public function postCheckout(Request $request) {
         $shipInfoType = $request->get('type');
+        $shipInfoData = $request->only(['name', 'email', 'phone_number', 'province', 'address']);
+
         if ($shipInfoType == 1) {
-            // Add ship infor to db
+            $shipInfo = $this->checkoutService->saveShipInfo($shipInfoData);
         } else {
-            // Update ship info
+            $shipInfo = $this->checkoutService->saveShipInfo($shipInfoData, $request->get('id'));
         }
-        // Validate va thanh toan
+        $request->request->add(['shipping_info_id' => $shipInfo->id]);
+
         $result = $this->checkoutService->checkoutCart($request->all());
         return redirect()->route('web.checkout.success');
     }
@@ -49,7 +56,6 @@ class CheckoutController extends WebBaseController
         $order = $this->checkoutService->getLatestOrder();
         $user = Auth::guard('web')->user();
         $shipInfo = $this->checkoutService->getShipInfo();
-//        dd($order);
         return view('web::checkout.success', compact('order', 'user', 'shipInfo'));
     }
 }

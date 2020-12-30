@@ -20,7 +20,7 @@
                                                 <div class="woocommerce-billing-fields__field-wrapper row">
                                                     <p class="col-12 mb-4d75 form-row form-row-first" id="billing_first_name_field" data-priority="10">
                                                         <a href="javascript:;" onclick="clearForm()" style="color: red; text-decoration-line: underline;">+ Thêm địa chỉ giao hàng khác</a>
-                                                        <input type="hidden" name="type" value="0">
+                                                        <input type="hidden" name="type" value="{{!empty($shipInfo) ? 0 : 1}}">
                                                     </p>
 
                                                     <p class="col-12 mb-4d75 form-row form-row-wide" id="billing_first_name_field" data-priority="10">
@@ -42,13 +42,13 @@
                                                         <label class="form-label">Tỉnh/Thành phố <span style="color: red">*</span></label>
                                                         <select name="province" class="form-control" tabindex="-1">
                                                             <option value="">Chọn tỉnh/thành phố</option>
-                                                            <option value="hn" @if($shipInfo->province == "hn") selected @endif>Hà Nội</option>
-                                                            <option value="hcm" @if($shipInfo->province == "hcm") selected @endif>Hồ Chí Minh</option>
+                                                            <option value="hn" @if($shipInfo->province ?? "" == "hn") selected @endif>Hà Nội</option>
+                                                            <option value="hcm" @if($shipInfo->province ?? "" == "hcm") selected @endif>Hồ Chí Minh</option>
                                                         </select>
                                                     </p>
                                                     <p class="col-12 mb-3 form-row form-row-wide address-field validate-required" id="billing_address_1_field" data-priority="50">
                                                         <label class="form-label">Địa chỉ <span style="color: red">*</span></label>
-                                                        <input type="text" class="input-text form-control" name="address1" value="{{$shipInfo->receiver_phone_number ?? ""}}" placeholder="Địa chỉ cụ thể khi nhận hàng">
+                                                        <input type="text" class="input-text form-control" name="address" value="{{$shipInfo->receiver_phone_number ?? ""}}" placeholder="Địa chỉ cụ thể khi nhận hàng">
                                                     </p>
                                                     <p class="col-12 mb-3 form-row form-row-wide address-field validate-required">
                                                         <label class="form-label">Ghi chú (không bắt buộc)</label>

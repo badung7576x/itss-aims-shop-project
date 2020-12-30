@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\ActionHistory\ActionHistoryInterface;
+use App\Repositories\ActionHistory\ActionHistoryRepository;
 use App\Repositories\Cart\CartInterface;
 use App\Repositories\Cart\CartRepository;
 use App\Repositories\Category\CategoryInterface;
@@ -45,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(PromotionInterface::class, PromotionRepository::class);
         $this->app->singleton(ShipInfoInterface::class, ShipInfoRepository::class);
         $this->app->singleton(OrderInterface::class, OrderRepository::class);
+        $this->app->singleton(ActionHistoryInterface::class, ActionHistoryRepository::class);
     }
 
     /**

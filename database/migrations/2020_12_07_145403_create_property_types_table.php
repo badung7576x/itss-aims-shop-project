@@ -17,8 +17,11 @@ class CreatePropertyTypesTable extends Migration
             $table->id();
             $table->integer('category_id');
             $table->string('property_name');
+            $table->string('value_type');
+            $table->text('value_default');
             $table->integer('filterable')->default(0);
             $table->integer('sort');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

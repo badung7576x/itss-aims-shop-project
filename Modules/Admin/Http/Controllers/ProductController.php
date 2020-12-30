@@ -10,7 +10,8 @@ use Modules\Admin\Services\ProductService;
 
 class ProductController extends Controller
 {
-    protected $productService;
+    protected ProductService $productService;
+
     public function __construct(ProductService $productService)
     {
         $this->productService = $productService;

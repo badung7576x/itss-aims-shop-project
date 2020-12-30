@@ -18,6 +18,7 @@ class CreatePropertiesTable extends Migration
             $table->integer('product_id');
             $table->integer('property_type_id');
             $table->string('value');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

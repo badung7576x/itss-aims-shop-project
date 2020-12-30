@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('type')->comment("1: PhysicGood, 2: EGood");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

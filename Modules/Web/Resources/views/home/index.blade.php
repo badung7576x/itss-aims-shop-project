@@ -98,7 +98,7 @@
                 @endif
             </ul>
             <nav>
-                {{$products->links()}}
+                {{$products->appends(request()->input())->links()}}
             </nav>
         </div>
     </section>

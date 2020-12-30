@@ -29,6 +29,7 @@ Route::group(['prefix' => '/', 'middleware'=>'web', 'namespace' => '\Modules\Web
         Route::post('/checkout', 'CheckoutController@postCheckout')->name('web.post-checkout');
         Route::get('/checkout-success', 'CheckoutController@checkoutSuccess')->name('web.checkout.success');
         Route::get('/account', 'AccountController@index')->name('account');
+        Route::get('/order-detail/{id}', 'AccountController@orderDetail')->name('account.order.detail');
         Route::get('/logout', 'Auth\LoginController@logout')->name('web.logout');
     });
 

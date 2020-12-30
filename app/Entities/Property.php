@@ -4,9 +4,12 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Property extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'properties';
 
     protected $fillable = [
@@ -14,7 +17,7 @@ class Property extends Model
     ];
 
     public function property_type() {
-        return $this->belongsTo(PropertyType::class, 'property_type_id', 'id');
+        return $this->belongsTo(PropertyType::class, 'property_type_id', 'id')->withTrashed();
     }
 
     /**

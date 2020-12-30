@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('order_no');
             $table->integer('user_id');
+            $table->integer('shipping_info_id');
             $table->string('note')->nullable();
             $table->integer('shipping_amount')->nullable();
             $table->integer('order_amount')->nullable();

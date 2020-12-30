@@ -7,16 +7,21 @@ use Illuminate\Support\Facades\Auth;
 use Modules\Web\Services\CartService;
 use Modules\Web\Services\CheckoutService;
 use Modules\Web\Services\ProductService;
+use Modules\Web\Services\ShipInfoService;
 
 class CheckoutController extends WebBaseController
 {
     protected $productService;
     protected $checkoutService;
-    public function __construct(ProductService $productService, CartService $cartService, CheckoutService $checkoutService)
+    protected $shipInfoService;
+
+    public function __construct(ProductService $productService, CartService $cartService,
+                                CheckoutService $checkoutService, ShipInfoService $shipInfoService)
     {
         parent::__construct($cartService);
         $this->productService = $productService;
         $this->checkoutService = $checkoutService;
+        $this->shipInfoService = $shipInfoService;
     }
 
     public function checkout() {
@@ -48,14 +53,14 @@ class CheckoutController extends WebBaseController
         }
         $request->request->add(['shipping_info_id' => $shipInfo->id]);
 
-        $result = $this->checkoutService->checkoutCart($request->all());
+        $this->checkoutService->checkoutCart($request->all());
         return redirect()->route('web.checkout.success');
     }
 
     public function checkoutSuccess() {
         $order = $this->checkoutService->getLatestOrder();
         $user = Auth::guard('web')->user();
-        $shipInfo = $this->checkoutService->getShipInfo();
+        $shipInfo = $this->shipInfoService->getShipInfo();
         return view('web::checkout.success', compact('order', 'user', 'shipInfo'));
     }
 }

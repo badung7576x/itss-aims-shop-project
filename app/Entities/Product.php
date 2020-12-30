@@ -3,9 +3,12 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'products';
 
     protected $fillable = [
@@ -17,10 +20,10 @@ class Product extends Model
     }
 
     public function category() {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
+        return $this->belongsTo(Category::class, 'category_id', 'id')->withTrashed();
     }
 
     public function properties() {
-        return $this->hasMany(Property::class, 'product_id', 'id');
+        return $this->hasMany(Property::class, 'product_id', 'id')->withTrashed();
     }
 }

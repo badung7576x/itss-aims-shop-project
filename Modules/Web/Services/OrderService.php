@@ -4,10 +4,7 @@
 namespace Modules\Web\Services;
 
 
-use App\Repositories\Cart\CartInterface;
 use App\Repositories\Order\OrderInterface;
-use App\Repositories\Warehouse\WarehouseInterface;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderService
@@ -19,9 +16,15 @@ class OrderService
         $this->orderInterface = $orderInterface;
     }
 
-    public function getUserOrders() {
+    public function getUserOrders()
+    {
         $user = Auth::user();
         return $this->orderInterface->getUserOrders($user->id);
+    }
+
+    public function getOrderById($id)
+    {
+        return $this->orderInterface->getOrderById($id);
     }
 
 }

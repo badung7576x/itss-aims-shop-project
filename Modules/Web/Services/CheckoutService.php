@@ -5,7 +5,6 @@ namespace Modules\Web\Services;
 
 
 use App\Repositories\Cart\CartInterface;
-use App\Repositories\ShipInfo\ShipInfoInterface;
 use App\Repositories\Order\OrderInterface;
 use App\Repositories\User\UserInterface;
 use Illuminate\Support\Facades\Auth;
@@ -19,24 +18,20 @@ class CheckoutService
 
     public function __construct(
         UserInterface $userInterface,
-        ShipInfoInterface $shipInfoInterface,
         CartInterface $cartInterface,
         OrderInterface $orderInterface)
     {
         $this->userInterface = $userInterface;
-        $this->shipInfoInterface = $shipInfoInterface;
         $this->cartInterface = $cartInterface;
         $this->orderInterface = $orderInterface;
     }
-    public function getShipInfo() {
-        return $this->shipInfoInterface->getShipInfo();
-    }
 
-    public function checkoutCart($request) {
+    public function checkoutCart($request)
+    {
         $user = Auth::user();
 
         $itemsInCart = $this->cartInterface->getItemsAddByUser($user->id);
-        $total = collect($itemsInCart)->sum(function($item){
+        $total = collect($itemsInCart)->sum(function ($item) {
             return $item->product->price * $item->quantity;
         });
         // Create order
@@ -63,7 +58,8 @@ class CheckoutService
         $this->cartInterface->clearCart($user->id);
     }
 
-    public function getLatestOrder() {
+    public function getLatestOrder()
+    {
         $user = Auth::user();
         return $this->orderInterface->getLatestOrder($user->id);
     }

@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Quản lý chương trình khuyến mại</h1>
+                        <h1>Danh sách sản phẩm của chương trình khuyến mại</h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -19,7 +19,7 @@
                     <div class="col-10">
                         <div class="card">
                             <div class="card-header">
-                                Danh sách chương trình khuyến mại
+                                Danh sách sản phẩm 
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
                                        
@@ -33,35 +33,26 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th class="text-center">Name</th>
-                                        <th class="text-center">Type</th>
-                                        <th class="text-center">Description</th>
-                                        <th class="text-center">Discount</th>
+                                        <th class="text-center">Price</th>
                                         <th class="text-center">Number Product Discount</th>
-                                        <th class="text-center">Start At</th>
-                                        <th class="text-center">End At</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($promotions as $key => $promotion)
+                                        @foreach($promotion->promotionDetail as $key => $promotionDetail)
                                         <tr>
-                                            <td class="text-center">{{$key + 1 }}</td>
-                                            <td >{{ $promotion->name}}</td>
-                                            <td class="text-center">{{ \App\Entities\Promotion::$typePromotions[$promotion->type]}}</td>
-                                            <td class="text-center">{{ $promotion->description}}</td>
-                                            <td class="text-center">{{ $promotion->discount}} %</td>
-                                            <td class="text-center">{{ $promotion->num_product_discount}}</td>
-                                            <td class="text-center">{{ $promotion->start_at}}</td>
-                                            <td class="text-center">{{ $promotion->end_at}}</td>
-                                            <td class="text-center">@if (count($promotion->promotionDetail) < 1)
-                                                <span class="badge badge-danger">Chưa áp dụng</span>
+                                            <td class="text-center">{{ $key + 1 }}</td>
+                                            <td class="text-center">{{ \App\Entities\Product::find($promotionDetail->product_id)->title }}</td>
+                                            <td class="text-center">{{ \App\Entities\Product::find($promotionDetail->product_id)->price }} đồng</td>
+                                            <td class="text-center">{{ $promotionDetail->num_product_discount }}</td>
+                                            <td class="text-center">@if (!$promotionDetail->num_product_discount == 0)
+                                                <span class="badge badge-success">Còn sản phẩm</span>
                                             @else
-                                                <span class="badge badge-success">Đã áp dụng</span>
+                                                <span class="badge badge-danger">Hết sản phẩm</span>
                                             @endif</td>
                                             <td scope="col" class="position-center ">
-                                                <a href="{{route("promotion.edit", $promotion->id)}}" class="btn btn-info" role="button"><i class="fas fa-edit"></i></a>
-                                                <a href="{{route("promotion.show", $promotion->id)}}" class="btn btn-warning" role="button"><i class="fas fa-info-circle"></i></a>
+                                                <a href="{{route("promotion.edit", $promotionDetail->id)}}" class="btn btn-info" role="button"><i class="fas fa-edit"></i></a>
                                                 <form action="{{route("promotion.destroy", $promotion->id)}}" method="POST" style="display:inline;">
                                                     @method("DELETE")
                                                     @csrf
@@ -81,8 +72,8 @@
                             <span class="info-box-icon"><i class="fas fa-percent"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Số chương trình khuyến mại</span>
-                                <span class="info-box-number">{{count($promotions)}}</span>
+                                <span class="info-box-text">Phần trăm giảm giá</span>
+                                <span class="info-box-number">{{ $promotion->discount }}%</span>
                             </div>
                         </div>
                     </div>
@@ -90,6 +81,4 @@
             </div>
         </section>
     </div>
-    
-
 @endsection

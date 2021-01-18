@@ -54,7 +54,8 @@ class PromotionController extends Controller
      */
     public function show($id)
     {
-       
+        $promotion =  $this->productService->getPromotion($id);
+        return view('admin::promotion.detail',compact('promotion'));
     }
 
     /**

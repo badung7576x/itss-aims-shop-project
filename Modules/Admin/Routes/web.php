@@ -26,7 +26,8 @@ Route::group(['prefix' => 'admin', 'middleware'=>'web', 'namespace' => '\Modules
         Route::get('/render-property-form', 'ProductController@renderPropertyForm')->name('admin.product.renderform');
         Route::get('/product-edit/{id}', 'ProductController@showEditForm')->name('admin.product.edit');
         Route::get('/product-promotion/{id}', 'ProductController@showChoosePromotion')->name('admin.product.promotion');
-        Route::get('/product-promotion/update', 'ProductController@updateChoosePromotion ')->name('admin.product.promotionUpdate');
+        Route::post('/product-promotion/update', 'ProductController@updateChoosePromotion')->name('admin.product.promotionUpdate');
+        Route::post('/product-promotion/add-product-to-promotion', 'ProductController@addProductToPromotion')->name('admin.product.addToPromotion');
         
         Route::post('/product-edit', 'ProductController@edit')->name('admin.product.post-edit');
         Route::post('/product-delete', 'ProductController@delete')->name('admin.product.post-delete');

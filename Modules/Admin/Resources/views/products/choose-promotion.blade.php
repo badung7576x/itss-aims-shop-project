@@ -24,9 +24,9 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{route("admin.product.promotionUpdate")}}" method="GET">
+                        <form action="{{route("admin.product.addToPromotion")}}" method="POST">
+                            @csrf
                             <div class="card-body">
-                                
                                 <h3>Thông tin sản phẩm :</h3>
                                 <div class="form-group col-sm-6">
                                     <input hidden name="product_id" type="text" class="form-control" value="{{$productId}}">
@@ -43,9 +43,7 @@
                                         <select class="form-control" id="promotion_id" name="promotion_id" required>
                                             <option value="" selected>---</option>
                                             @foreach($promotions as $key => $promotion)
-                                                @if (!$promotion->product_id)
                                                     <option value="{{$promotion->id}}">{{$promotion->name}}</option>
-                                                @endif
                                             @endforeach
                                         </select>
                                     </div>

@@ -9,7 +9,7 @@ class PromotionDetail extends Model
     protected $table = 'promotion_detail';
 
     protected $fillable = [
-        'id', 'promotion_id', 'product_id', 'num_product_discount'
+        'id', 'promotion_id', 'product_id', 'num_product_discount','num_product_sell'
     ];
 
     public function promotion()

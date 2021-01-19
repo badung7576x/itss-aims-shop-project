@@ -28,7 +28,11 @@
                                             @foreach($itemsInCart as $item)
                                             <tr class="woocommerce-cart-form__cart-item cart_item">
                                                 <input type="hidden" id="product_id" name="item['product_id']" value="{{$item->product_id}}">
-                                                <input type="hidden" id="price" value="{{$item->product->price}}">
+                                                <input type="hidden" id="price" @if ($item->promotion_price==0)
+                                                    value="{{$item->product->price}}"
+                                                @else
+                                                    value="{{$item->promotion_price}}"
+                                                @endif >
                                                 <td class="product-name" data-title="Product">
                                                     <div class="d-flex align-items-center">
                                                         <a href="#">
@@ -41,7 +45,11 @@
                                                     </div>
                                                 </td>
                                                 <td class="product-price" data-title="Price">
-                                                    <span class="woocommerce-Price-amount amount">{{\App\Helpers\format_currency($item->product->price)}}</span>
+                                                    @if ($item->promotion_price==0)
+                                                        <span class="woocommerce-Price-amount amount">{{\App\Helpers\format_currency($item->product->price)}}</span>
+                                                    @else
+                                                        <span class="woocommerce-Price-amount amount">{{\App\Helpers\format_currency($item->promotion_price)}}</span>
+                                                    @endif 
                                                 </td>
                                                 <td class="product-quantity" data-title="Quantity">
                                                     <div class="quantity d-flex align-items-center">
@@ -49,9 +57,20 @@
                                                         <div class="border px-3 width-120">
                                                             <div class="js-quantity">
                                                                 <div class="d-flex align-items-center">
+                                                                    @if ($item->promotion_price==0)
                                                                     <span class="js-minus text-dark" onclick="decrementQuantity(this, {{$item->product_id}}, {{$item->product->price}})"><i class="fas fa-minus"></i></span>
+                                                                    @else
+                                                                    <span class="js-minus text-dark" onclick="decrementQuantity(this, {{$item->product_id}}, {{$item->promotion_price}})"><i class="fas fa-minus"></i></span>
+                                                                    @endif 
+                                                                    
                                                                     <input type="text" class="input-text qty text js-result form-control text-center border-0" id="quantity" pattern="\d+" name="item['quantity']" value="{{$item->quantity}}"/>
+
+                                                                    @if ($item->promotion_price==0)
                                                                     <span class="js-plus text-dark" onclick="incrementQuantity(this, {{$item->product_id}},  {{$item->product->price}})"><i class="fas fa-plus"></i></span>
+                                                                    @else
+                                                                    <span class="js-plus text-dark" onclick="incrementQuantity(this, {{$item->product_id}},  {{$item->promotion_price}})"><i class="fas fa-plus"></i></span>
+                                                                    @endif 
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -59,7 +78,11 @@
                                                     </div>
                                                 </td>
                                                 <td class="product-subtotal">
+                                                    @if ($item->promotion_price==0)
                                                     <span class="woocommerce-Price-amount amount" id="total-price-{{$item->product_id}}">{{\App\Helpers\calculate_total_price($item->quantity, $item->product->price)}}</span>
+                                                    @else
+                                                    <span class="woocommerce-Price-amount amount" id="total-price-{{$item->product_id}}">{{\App\Helpers\calculate_total_price($item->quantity, $item->promotion_price)}}</span>
+                                                    @endif 
                                                 </td>
                                                 <td class="product-remove">
                                                     <a href="#" class="remove" onclick="removeItem(this)">

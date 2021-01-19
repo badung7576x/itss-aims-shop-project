@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Entities\Product;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
@@ -89,6 +90,9 @@ class ProductController extends Controller
         {
             $data['num_product_discount'] += $promotionTarget->num_product_discount;
         }
+        $product = Product::findOrFail($data['product_id'])->update([
+            'status' => 3,
+        ]);
         unset($data['product_id']);
         $promotion =  $this->productService->updatePromotion($data,$id);
         return redirect()->route('promotion.index');

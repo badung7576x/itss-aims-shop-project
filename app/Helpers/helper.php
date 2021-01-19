@@ -32,3 +32,11 @@ if (!function_exists('get_order_status')) {
         return $message;
     }
 }
+
+if (!function_exists('cal_price_promotion')) {
+
+    function cal_price_promotion($price, $discount)
+    {
+        return $price*(100-$discount)/100;
+    }
+}

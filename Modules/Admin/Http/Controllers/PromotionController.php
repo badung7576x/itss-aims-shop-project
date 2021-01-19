@@ -2,6 +2,8 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Entities\Product;
+use App\Entities\PromotionDetail;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
@@ -98,4 +100,16 @@ class PromotionController extends Controller
         $this->productService->deletePromotion($id);
         return redirect()->route('promotion.index');
     }
+
+    public function destroyPromotionDetail($id)
+    {
+        $promotionDetail = PromotionDetail::findOrFail($id);
+        $promotionID = $promotionDetail->promotion_id;
+        $product = Product::findOrFail($promotionDetail->product_id)->update([
+            'status' => 1,
+        ]);
+        $promotionDetail->delete();
+        return redirect()->route('promotion.show', $promotionID);
+    }
+
 }

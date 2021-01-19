@@ -35,6 +35,7 @@
                                         <th class="text-center">Name</th>
                                         <th class="text-center">Price</th>
                                         <th class="text-center">Number Product Discount</th>
+                                        <th class="text-center">Number Product Sold</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Action</th>
                                     </tr>
@@ -46,16 +47,15 @@
                                             <td class="text-center">{{ \App\Entities\Product::find($promotionDetail->product_id)->title }}</td>
                                             <td class="text-center">{{ \App\Entities\Product::find($promotionDetail->product_id)->price }} đồng</td>
                                             <td class="text-center">{{ $promotionDetail->num_product_discount }}</td>
-                                            <td class="text-center">@if (!$promotionDetail->num_product_discount == 0)
+                                            <td class="text-center">{{ $promotionDetail->num_product_sell ?? 0 }}</td>
+                                            <td class="text-center">@if ($promotionDetail->num_product_discount > $promotionDetail->num_product_sold)
                                                 <span class="badge badge-success">Còn sản phẩm</span>
                                             @else
                                                 <span class="badge badge-danger">Hết sản phẩm</span>
                                             @endif</td>
                                             <td scope="col" class="position-center ">
                                                 <a href="{{route("promotion.edit", $promotionDetail->id)}}" class="btn btn-info" role="button"><i class="fas fa-edit"></i></a>
-                                                <form action="{{route("promotion.destroy", $promotion->id)}}" method="POST" style="display:inline;">
-                                                    @method("DELETE")
-                                                    @csrf
+                                                <form action="{{route("admin.product.promotion-detail.delete", $promotionDetail->id)}}" method="GET" style="display:inline;">
                                                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                                 </form>
                                             </td>

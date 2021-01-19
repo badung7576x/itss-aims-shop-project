@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="form-group col-sm-6">
                                         <label for="num_product_discount">Số lượng sản phẩm áp dụng :</label>
-                                        <input type="number" class="form-control" name="num_product_discount" id="num_product_discount" min='1' max='{{@$product->quantity->quantity}}'>
+                                        <input type="number" class="form-control" name="num_product_discount" id="num_product_discount" min='1' max='{{@$product->quantity->quantity}}' value="1">
                                     </div>
                                 </div>
                                 <div id="other-property"></div>

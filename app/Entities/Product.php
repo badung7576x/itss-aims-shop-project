@@ -26,4 +26,5 @@ class Product extends Model
     public function properties() {
         return $this->hasMany(Property::class, 'product_id', 'id')->withTrashed();
     }
+
 }

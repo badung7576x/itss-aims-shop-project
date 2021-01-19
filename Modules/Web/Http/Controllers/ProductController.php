@@ -2,6 +2,7 @@
 
 namespace Modules\Web\Http\Controllers;
 
+use App\Entities\PromotionDetail;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Modules\Web\Services\CartService;
@@ -30,9 +31,12 @@ class ProductController extends WebBaseController
     }
 
     public function showDetail(Request $request, int $id){
+     
+        $promotionDetail = PromotionDetail::where('product_id', $id)->get();
         $product = $this->productService->getProductDetail($id);
         $categories = $this->productService->getCategories();
-        return view('web::detail.index', compact('categories', 'product'));
+        
+        return view('web::detail.index', compact('categories', 'product', 'promotionDetail'));
     }
 
     public function search(Request $request) {

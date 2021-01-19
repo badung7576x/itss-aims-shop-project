@@ -2,10 +2,12 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Entities\Product;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\ProductCRUDRequest;
+use Modules\Admin\Http\Requests\PromotionRequest;
 use Modules\Admin\Services\ProductService;
 
 class ProductController extends Controller
@@ -78,14 +80,32 @@ class ProductController extends Controller
         return view('admin::products.choose-promotion', compact('product', 'promotions','productId'));
     }
 
-    public function updateChoosePromotion(Request $request)
+    public function addProductToPromotion(PromotionRequest $request)
+    {
+        $id = $request->get('promotion_id');
+        $promotionTarget = $this->productService->getPromotion($id);
+        $data = $request->all();
+        $promotionDetail = $this->productService->addProductToPromotion($data);
+        if ($data['num_product_discount'] != 0)
+        {
+            $data['num_product_discount'] += $promotionTarget->num_product_discount;
+        }
+        $product = Product::findOrFail($data['product_id'])->update([
+            'status' => 3,
+        ]);
+        unset($data['product_id']);
+        $promotion =  $this->productService->updatePromotion($data,$id);
+        return redirect()->route('promotion.index');
+    }
+
+    public function updateChoosePromotion(PromotionRequest $request)
     {
         $id = $request->get('promotion_id');
         $data = $request->all();
         $promotion =  $this->productService->updatePromotion($data,$id);
         return redirect()->route('promotion.index');
     }
-
+    
     public function detail(Request $request, $id) {
         $product = $this->productService->getProductById($id);
 

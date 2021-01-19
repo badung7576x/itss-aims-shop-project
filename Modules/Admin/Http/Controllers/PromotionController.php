@@ -2,7 +2,10 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Entities\Product;
+use App\Entities\PromotionDetail;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Admin\Services\ProductService;
@@ -42,6 +45,11 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'start_at' => 'required|date|after_or_equal:now',
+            'end_at' => 'required|date|after_or_equal:start_at',
+            'name' => 'unique:promotions,name,'. $request['name'] .',id'      
+        ]);
         $data = $request->all();
         $promotions = $this->productService->createPromotion($data);
         return redirect()->route('promotion.index');
@@ -54,7 +62,8 @@ class PromotionController extends Controller
      */
     public function show($id)
     {
-       
+        $promotion =  $this->productService->getPromotion($id);
+        return view('admin::promotion.detail',compact('promotion'));
     }
 
     /**
@@ -91,4 +100,16 @@ class PromotionController extends Controller
         $this->productService->deletePromotion($id);
         return redirect()->route('promotion.index');
     }
+
+    public function destroyPromotionDetail($id)
+    {
+        $promotionDetail = PromotionDetail::findOrFail($id);
+        $promotionID = $promotionDetail->promotion_id;
+        $product = Product::findOrFail($promotionDetail->product_id)->update([
+            'status' => 1,
+        ]);
+        $promotionDetail->delete();
+        return redirect()->route('promotion.show', $promotionID);
+    }
+
 }

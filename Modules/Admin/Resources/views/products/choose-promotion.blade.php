@@ -24,9 +24,9 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{route("admin.product.promotionUpdate")}}" method="GET">
+                        <form action="{{route("admin.product.addToPromotion")}}" method="POST">
+                            @csrf
                             <div class="card-body">
-                                
                                 <h3>Thông tin sản phẩm :</h3>
                                 <div class="form-group col-sm-6">
                                     <input hidden name="product_id" type="text" class="form-control" value="{{$productId}}">
@@ -43,15 +43,13 @@
                                         <select class="form-control" id="promotion_id" name="promotion_id" required>
                                             <option value="" selected>---</option>
                                             @foreach($promotions as $key => $promotion)
-                                                @if (!$promotion->product_id)
                                                     <option value="{{$promotion->id}}">{{$promotion->name}}</option>
-                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-sm-6">
                                         <label for="num_product_discount">Số lượng sản phẩm áp dụng :</label>
-                                        <input type="number" class="form-control" name="num_product_discount" id="num_product_discount" min='1' max='{{@$product->quantity->quantity}}'>
+                                        <input type="number" class="form-control" name="num_product_discount" id="num_product_discount" min='1' max='{{@$product->quantity->quantity}}' value="1">
                                     </div>
                                 </div>
                                 <div id="other-property"></div>

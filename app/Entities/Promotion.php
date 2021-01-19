@@ -21,6 +21,9 @@ class Promotion extends Model
         self:: PROMOTION_TYPE_2 => 'Big Sale',
         self:: PROMOTION_TYPE_3 => '12/12',
     ];
-
+    public function promotionDetail()
+    {
+        return $this->hasMany('App\Entities\PromotionDetail');
+    }
  
 }

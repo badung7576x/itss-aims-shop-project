@@ -29,13 +29,6 @@
                             @method('PUT')
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-sm-8">
-                                        <label for="">Product ID :</label>
-                                        <input type="text" value="{{$promotion->product_id}}" class="form-control @error('product_id') is-invalid @enderror" name="product_id" id="product_id">
-                                        @error('title')
-                                        <span class="error invalid-feedback">{{ $message }}</span>
-                                        @enderror
-                                    </div>
                                     <div class="form-group col-sm-4">
                                         <label for="">Product Category ID:</label>
                                         <input type="text" value="{{$promotion->category_id}}" class="form-control @error('category_id') is-invalid @enderror" name="category_id" id="category_id">

@@ -30,8 +30,8 @@
                                 <div class="row">
                                     <div class="form-group col-sm-8">
                                         <label for="">Tên chương trình khuyến mại</label>
-                                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="name" id="name" value="{{old("name", "")}}" placeholder="Nhập tên chương trình">
-                                        @error('title')
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{old("name", "")}}" placeholder="Nhập tên chương trình">
+                                        @error('name')
                                         <span class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>

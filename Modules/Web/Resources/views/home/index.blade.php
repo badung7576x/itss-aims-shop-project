@@ -106,14 +106,14 @@
     <section class="mb-8">
         <div class="space-bottom-3 space-bottom-lg-4">
             @foreach($promotions as $promotion)
-                <div class="container">
+                <div class="container mt-5">
                     <header class="mb-5 d-md-flex align-items-center">
                         <h2 class="font-size-7 mb-3 mb-md-0">{{ $promotion->name }}</h2>
                         <div class="mb-3 mb-md-0 ml-md-4 bg-primary rounded-md py-1 text-lh-lg px-3 d-flex text-white font-weight-medium">
-                            <div class="days mx-2">114</div>
-                            <div class="hrs mx-2">03</div>
+                            <div class="days mx-2">Tới ngày : {{date('d-m-Y | H:i:s', strtotime($promotion->end_at))}}</div>
+                            {{-- <div class="hrs mx-2">03</div>
                             <div class="min mx-2">60</div>
-                            <div class="sec mx-2">25</div>
+                            <div class="sec mx-2">25</div> --}}
                         </div>
                     </header>
                     
@@ -125,17 +125,17 @@
                                     <div class="media p-3 p-md-4d875">
                                         <a href="#" class="d-block" tabindex="0"><img style="max-width:125px;" src="{{\App\Entities\Product::find($promotionDetail->product_id)->image}}" alt="image-description" /></a>
                                         <div class="media-body ml-4d875">
-                                            <div class="text-uppercase font-size-1 mb-1 text-truncate"><a href="#single-product-v3.html" tabindex="0">Hard Cover</a></div>
+                                            <div class="text-uppercase font-size-1 mb-1 text-truncate"><a href="#single-product-v3.html" tabindex="0">{{\App\Entities\Promotion::$typePromotions[$promotion->type] }}</a></div>
                                             <h2 class="woocommerce-loop-product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
                                                 <a href="{{route('product.detail', $promotionDetail->product_id ?? NULL)}}">{{\App\Entities\Product::find($promotionDetail->product_id)->title}}</a>
                                             </h2>
-                                            <div class="font-size-2 mb-1 text-truncate"><a href="#authors-single.html" class="text-gray-700" tabindex="0">{{\App\Entities\Product::find($promotionDetail->product_id)->title}}</a></div>
+                                            <div class="font-size-2 mb-1 text-truncate">Số lượng : {{$promotionDetail->num_product_discount}} sản phẩm</div>
                                             <div class="price d-flex align-items-center font-weight-medium font-size-3 mb-3">
                                                 <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol"></span>{{\App\Entities\Product::find($promotionDetail->product_id)->price *(100 - $promotion->discount) /100 }} đồng</span>
                                             </div>
                                             <div class="deal-progress">
                                                 <div class="d-flex justify-content-between font-size-2 mb-2d75">
-                                                    <span>Giá gốc : {{\App\Entities\Product::find($promotionDetail->product_id)->price}}</span>
+                                                    <span>Giá gốc : {{\App\Entities\Product::find($promotionDetail->product_id)->price}} đồng</span>
                                                 </div>
                                                 <div class="progress height-7">
                                                     <div class="progress-bar bg-dark" role="progressbar" style="width: 82%;" aria-valuenow="14" aria-valuemin="0" aria-valuemax="17"></div>

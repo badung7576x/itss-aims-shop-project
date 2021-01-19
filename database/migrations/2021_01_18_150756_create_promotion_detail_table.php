@@ -18,6 +18,7 @@ class CreatePromotionDetailTable extends Migration
             $table->integer('promotion_id');
             $table->integer('product_id');
             $table->integer('num_product_discount');
+            $table->integer('num_product_sell')->nullable();
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace Modules\Admin\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Admin\Services\ProductService;
@@ -42,6 +43,11 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'start_at' => 'required|date|after_or_equal:now',
+            'end_at' => 'required|date|after_or_equal:start_at',
+            'name' => 'unique:promotions,name,'. $request['name'] .',id'      
+        ]);
         $data = $request->all();
         $promotions = $this->productService->createPromotion($data);
         return redirect()->route('promotion.index');

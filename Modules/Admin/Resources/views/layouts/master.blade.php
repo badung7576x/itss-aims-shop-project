@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{asset("plugins/jqvmap/jqvmap.min.css")}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset("admin/css/adminlte.min.css")}}">
+
+    <link rel="stylesheet" href="{{asset("plugins/toastr/toastr.min.css")}}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{asset("plugins/overlayScrollbars/css/OverlayScrollbars.min.css")}}">
     <!-- Google Font: Source Sans Pro -->
@@ -45,6 +47,10 @@
     <script src="{{asset("plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js")}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset("admin/js/adminlte.js")}}"></script>
+
+    <script src="{{asset("plugins/sweetalert2/sweetalert2.min.js")}}"></script>
+
+    <script src="{{asset("plugins/toastr/toastr.min.js")}}"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

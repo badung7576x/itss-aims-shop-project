@@ -16,9 +16,9 @@ class CreateActionHistoriesTable extends Migration
         Schema::create('action_histories', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('action_type');
-            $table->string('descriptions');
-            $table->dateTime('activated_at');
+            $table->string('action_type')->nullable();
+            $table->string('descriptions')->nullable();
+            $table->dateTime('activated_at')->nullable();
             $table->timestamps();
         });
     }

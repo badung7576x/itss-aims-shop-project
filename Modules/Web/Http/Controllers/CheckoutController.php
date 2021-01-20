@@ -4,6 +4,7 @@ namespace Modules\Web\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Modules\Web\Http\Requests\CheckoutRequest;
 use Modules\Web\Services\CartService;
 use Modules\Web\Services\CheckoutService;
 use Modules\Web\Services\ProductService;
@@ -28,25 +29,32 @@ class CheckoutController extends WebBaseController
         $messages = [];
         $canCheckout = $this->cartService->checkQuantityInCart($messages);
         if(!$canCheckout) {
-            return redirect()->back()->with(['message' => $messages]);
+            return redirect()->back()->with(['status' => false, 'message' => $messages]);
         }
 
         $itemsInCart = $this->cartService->getItemsAddByUser($this->user->id);
+        if(count($itemsInCart) <= 0) {
+            return redirect()->back()->with(['status' => false, 'message' => "Giỏ hàng trống! Không thể đặt hàng"]);
+        }
+
         $totalAmount = $this->cartService->getTotalAmountInCart($itemsInCart);
-        $shipInfo = $this->checkoutService->getShipInfo();
+        $shipInfo = $this->shipInfoService->getShipInfo();
 
         return view('web::checkout.index', compact('itemsInCart', 'totalAmount', 'shipInfo'));
     }
 
-    public function postCheckout(Request $request) {
+    public function postCheckout(CheckoutRequest $request) {
         $shipInfoType = $request->get('type');
-        if ($shipInfoType == 1) {
-            // Add ship infor to db
+        $shipInfoData = $request->only(['receiver_name', 'receiver_email', 'receiver_phone_number', 'province', 'address']);
+
+        if ($shipInfoType === 1) {
+            $shipInfo = $this->checkoutService->saveShipInfo($shipInfoData);
         } else {
-            // Update ship info
+            $shipInfo = $this->checkoutService->saveShipInfo($shipInfoData, $request->get('id'));
         }
-        // Validate va thanh toan
-        $result = $this->checkoutService->checkoutCart($request->all());
+        $request->request->add(['shipping_info_id' => $shipInfo->id]);
+
+        $this->checkoutService->checkoutCart($request->all());
         return redirect()->route('web.checkout.success');
     }
 
@@ -54,7 +62,6 @@ class CheckoutController extends WebBaseController
         $order = $this->checkoutService->getLatestOrder();
         $user = Auth::guard('web')->user();
         $shipInfo = $this->shipInfoService->getShipInfo();
-
         return view('web::checkout.success', compact('order', 'user', 'shipInfo'));
     }
 }

@@ -30,6 +30,7 @@ Route::group(['prefix' => '/', 'middleware'=>'web', 'namespace' => '\Modules\Web
         Route::get('/checkout-success', 'CheckoutController@checkoutSuccess')->name('web.checkout.success');
         Route::get('/account', 'AccountController@index')->name('account');
         Route::get('/order-detail/{id}', 'AccountController@orderDetail')->name('account.order.detail');
+        Route::post('/order-cancel', 'AccountController@orderCancel')->name('order.cancel');
         Route::get('/logout', 'Auth\LoginController@logout')->name('web.logout');
     });
 

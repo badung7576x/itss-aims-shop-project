@@ -9,6 +9,6 @@ class ShipInfo extends Model
     protected $table = 'shipping_infos';
 
     protected $fillable = [
-        'id', 'user_id', 'receiver_name', 'receiver_email', 'receiver_phone_number', 'province', 'address'
+        'user_id', 'receiver_name', 'receiver_email', 'receiver_phone_number', 'province', 'address'
     ];
 }

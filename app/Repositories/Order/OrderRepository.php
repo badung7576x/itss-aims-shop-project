@@ -5,6 +5,7 @@ namespace App\Repositories\Order;
 
 use App\Entities\Order;
 use App\Entities\OrderLine;
+use App\Entities\Warehouse;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
 
@@ -24,23 +25,23 @@ class OrderRepository extends BaseRepository implements OrderInterface
         DB::beginTransaction();
         $order = $this->_model->create($order);
         if(!empty($order)) {
-            $orderItems = [];
             foreach($items as $item) {
-                $orderItems[] = [
-                    'order_id' => $order['id'],
+                $orderItem = [
+                    'order_id' => $order->id,
                     'product_id' => $item->product_id,
                     'quantity' => $item->quantity,
                     'price' => $item->product->price,
                     'promotion_id' => null
                 ];
+                OrderLine::create($orderItem);
+                Warehouse::where('product_id', $item->product_id)->decrement('quantity', $item->quantity);
             }
-            OrderLine::insert($orderItems);
             DB::commit();
         } else {
             DB::rollBack();
         }
 
-
+        return $order;
     }
 
     public function getLatestOrder($userId)
@@ -50,12 +51,12 @@ class OrderRepository extends BaseRepository implements OrderInterface
 
     public function getOrderById($id)
     {
-        return $this->find($id);
+        return $this->_model->with('order_items')->find($id);
     }
 
     public function getUserOrders($userId)
     {
-        return $this->_model->where('user_id', $userId)->get();
+        return $this->_model->where('user_id', $userId)->latest('updated_at')->get();
     }
 }
 

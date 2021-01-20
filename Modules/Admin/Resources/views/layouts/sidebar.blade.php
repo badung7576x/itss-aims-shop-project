@@ -56,8 +56,8 @@
                 <li class="nav-item menu-open">
                     <a href="#" class="nav-link
                         {{ (request()->is('admin/promotion*')) ?  'active' : '' }}">
-                        <i class="nav-icon fas fa-box"></i>
-                        <p> Chương trình khuyến mại
+                        <i class="nav-icon fas fa-percent"></i>
+                        <p> Khuyến mại
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -76,6 +76,13 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item menu-open">
+                    <a href="{{route('admin.histories')}}" class="nav-link {{ (request()->is('admin/histories')) ?  'active' : '' }}">
+                        <i class="nav-icon fas fa-history"></i>
+                        <p> Lịch sử hoạt động</p>
+                    </a>
+                </li>
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

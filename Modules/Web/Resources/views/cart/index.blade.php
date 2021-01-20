@@ -49,7 +49,7 @@
                                                         <span class="woocommerce-Price-amount amount">{{\App\Helpers\format_currency($item->product->price)}}</span>
                                                     @else
                                                         <span class="woocommerce-Price-amount amount">{{\App\Helpers\format_currency($item->promotion_price)}}</span>
-                                                    @endif 
+                                                    @endif
                                                 </td>
                                                 <td class="product-quantity" data-title="Quantity">
                                                     <div class="quantity d-flex align-items-center">
@@ -61,16 +61,17 @@
                                                                     <span class="js-minus text-dark" onclick="decrementQuantity(this, {{$item->product_id}}, {{$item->product->price}})"><i class="fas fa-minus"></i></span>
                                                                     @else
                                                                     <span class="js-minus text-dark" onclick="decrementQuantity(this, {{$item->product_id}}, {{$item->promotion_price}})"><i class="fas fa-minus"></i></span>
-                                                                    @endif 
-                                                                    
-                                                                    <input type="text" class="input-text qty text js-result form-control text-center border-0" id="quantity" pattern="\d+" name="item['quantity']" value="{{$item->quantity}}"/>
+                                                                    @endif
+
+                                                                    <input type="text" class="input-text qty text js-result form-control text-center border-0" id="quantity" pattern="\d+" name="item['quantity']" value="{{$item->quantity}}" readonly/>
 
                                                                     @if ($item->promotion_price==0)
+
                                                                     <span class="js-plus text-dark" onclick="incrementQuantity(this, {{$item->product_id}},  {{$item->product->price}})"><i class="fas fa-plus"></i></span>
                                                                     @else
                                                                     <span class="js-plus text-dark" onclick="incrementQuantity(this, {{$item->product_id}},  {{$item->promotion_price}})"><i class="fas fa-plus"></i></span>
-                                                                    @endif 
-                                                                    
+                                                                    @endif
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -82,7 +83,7 @@
                                                     <span class="woocommerce-Price-amount amount" id="total-price-{{$item->product_id}}">{{\App\Helpers\calculate_total_price($item->quantity, $item->product->price)}}</span>
                                                     @else
                                                     <span class="woocommerce-Price-amount amount" id="total-price-{{$item->product_id}}">{{\App\Helpers\calculate_total_price($item->quantity, $item->promotion_price)}}</span>
-                                                    @endif 
+                                                    @endif
                                                 </td>
                                                 <td class="product-remove">
                                                     <a href="#" class="remove" onclick="removeItem(this)">
@@ -213,10 +214,15 @@
                     items: data,
                 },
                 success: function(result){
+                    console.log(result);
                     if(result.status) {
                         alert(result.message);
                     } else {
-                        alert(result.message.join("\n"));
+                        let messages = '';
+                        if(Array.isArray(result.message)) {
+                            result.message.forEach((item) => messages += item.message + "\n");
+                        }
+                        alert(messages);
                     }
                 },
             });

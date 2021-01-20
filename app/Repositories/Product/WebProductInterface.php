@@ -11,4 +11,6 @@ interface WebProductInterface
     function getProductById($id);
 
     function getListProductsWithKeyword($keyword, $categoryId = null);
+
+    function getProductWithIds(array $ids);
 }

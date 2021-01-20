@@ -18,5 +18,10 @@ class PropertyRepository extends BaseRepository implements PropertyInterface
         return Property::class;
     }
 
+    public function getWeightProperty($productIdArr, $propertyTypeIdArr) {
+        $whereConditions = [];
+
+    }
+
 }
 

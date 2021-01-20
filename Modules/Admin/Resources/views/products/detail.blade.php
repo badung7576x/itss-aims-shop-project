@@ -64,7 +64,8 @@
                                             @foreach($product->properties as $property)
                                                 <tr>
                                                     <td width="30%">{{$property->property_type->property_name}}</td>
-                                                    <td>{{$property->value}}</td>
+                                                    <td>{{$property->value}} @if($property->property_type->property_name == "Khối lượng")
+                                                        {{DEFAULT_WEIGHT_UNIT}} @endif</td>
                                                 </tr>
                                             @endforeach
                                             </tbody>

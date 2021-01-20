@@ -20,7 +20,11 @@ class PropertyTypeRepository extends BaseRepository implements PropertyTypeInter
 
     function getPropertyTypesOfCategory($categoryId)
     {
-        return $this->_model->where('category_id', $categoryId)->orderBy('sort', 'ASC')->get();
+        return $this->_model->where(['category_id' => $categoryId])->orderBy('sort', 'ASC')->get();
+    }
+
+    function getWeightPropertyId() {
+        return $this->_model->where(['property_name' => "Khối lượng"])->pluck('id')->toArray();
     }
 }
 

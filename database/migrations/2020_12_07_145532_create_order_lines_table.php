@@ -18,8 +18,8 @@ class CreateOrderLinesTable extends Migration
             $table->integer('order_id');
             $table->integer('product_id');
             $table->integer('quantity');
-            $table->integer('order_price');
-            $table->integer('promotion_id');
+            $table->integer('price');
+            $table->integer('promotion_id')->nullable();
             $table->timestamps();
         });
     }

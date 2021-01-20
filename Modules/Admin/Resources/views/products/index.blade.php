@@ -76,7 +76,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" onclick="deleteProducts()">Yepp</button>
+                    <button type="button" class="btn btn-primary" onclick="deleteProducts()">Xác nhận</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -109,14 +109,14 @@
         });
 
         function renderData(data) {
-            let table = $('#product-table').DataTable( {
+            let table = $('#product-table').removeAttr('width').DataTable( {
                 "searching": false,
                 "info": false,
                 "paging": true,
                 "lengthChange": false,
                 "autoWidth": false,
                 "pageLength": 15,
-                "responsive": true,
+                "responsive": false,
                 "order": [[0, 'asc']],
                 "select": {
                     "style":    'os',
@@ -124,17 +124,21 @@
                 },
                 "data": data,
                 "columns": [
-                    { "title": "", "defaultContent": "", "width": "5%"},
-                    { "title": "Hình ảnh", "width": "8%"},
-                    { "title": "Tên", "width": "15%"},
-                    { "title": "Loại sản phẩm", "width": "10%"},
-                    { "title": "Giá gốc", "width": "10%"},
-                    { "title": "Giá khuyến mãi", "width": "10%"},
-                    { "title": "Số lượng", "width": "10%"},
-                    { "title": "Trạng thái", "width": "4%"},
-                    { "title": "Thao tác", "width": "8%"}
+                    { "title": "", "defaultContent": ""},
+                    { "title": "Hình ảnh"},
+                    { "title": "Tên"},
+                    { "title": "Loại sản phẩm"},
+                    { "title": "Giá gốc"},
+                    { "title": "Giá khuyến mãi"},
+                    { "title": "Số lượng"},
+                    { "title": "Trạng thái"},
+                    { "title": "Thao tác"}
                 ],
                 "columnDefs": [
+                    { "width": "20px", "targets": [0, 6] },
+                    { "width": "150px", "targets": [2] },
+                    { "width": "100px", "targets": [1, 4, 5]},
+                    { "width": "10px", "targets": [3]},
                     {
                         "targets":   0,
                         "orderable": false,
@@ -220,6 +224,21 @@
 
         function deleteProducts() {
             $('form#list-products').submit();
+        }
+
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        if('{{session('message')}}' != '') {
+            if('{{session('type')}}' == 'error') {
+                toastr.error('{{session('message')}}');
+            } else if ('{{session('type')}}' == 'success') {
+                toastr.success('{{session('message')}}');
+            }
+
         }
     </script>
 @endsection

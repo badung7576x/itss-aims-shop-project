@@ -42,12 +42,16 @@ class ProductRepository extends BaseRepository implements AdminProductInterface,
         return $query->with(['category'])->paginate(PER_PAGE);
     }
 
-    function deleteProduct($id)
+    public function deleteProduct($id)
     {
         $product = $this->find($id);
         $product->properties()->delete();
         $product->quantity()->delete();
         $product->delete();
+    }
+
+    public function getProductWithIds(array $ids) {
+        return $this->_model->with('properties')->whereIn('id', $ids)->get();
     }
 }
 

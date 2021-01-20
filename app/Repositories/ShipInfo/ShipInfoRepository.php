@@ -25,5 +25,9 @@ class ShipInfoRepository extends BaseRepository implements ShipInfoInterface
         return $this->_model->where('user_id', $userId)->latest()->first();
     }
 
+    public function getShipInfoById($id) {
+        return $this->find($id);
+    }
+
 }
 

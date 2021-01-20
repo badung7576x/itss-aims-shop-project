@@ -50,7 +50,7 @@
                                                             <div class="js-quantity">
                                                                 <div class="d-flex align-items-center">
                                                                     <span class="js-minus text-dark" onclick="decrementQuantity(this, {{$item->product_id}}, {{$item->product->price}})"><i class="fas fa-minus"></i></span>
-                                                                    <input type="text" class="input-text qty text js-result form-control text-center border-0" id="quantity" pattern="\d+" name="item['quantity']" value="{{$item->quantity}}"/>
+                                                                    <input type="text" class="input-text qty text js-result form-control text-center border-0" id="quantity" pattern="\d+" name="item['quantity']" value="{{$item->quantity}}" readonly/>
                                                                     <span class="js-plus text-dark" onclick="incrementQuantity(this, {{$item->product_id}},  {{$item->product->price}})"><i class="fas fa-plus"></i></span>
                                                                 </div>
                                                             </div>

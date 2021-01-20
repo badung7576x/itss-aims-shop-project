@@ -41,7 +41,7 @@ class OrderRepository extends BaseRepository implements OrderInterface
             DB::rollBack();
         }
 
-
+        return $order;
     }
 
     public function getLatestOrder($userId)
@@ -51,12 +51,12 @@ class OrderRepository extends BaseRepository implements OrderInterface
 
     public function getOrderById($id)
     {
-        return $this->find($id);
+        return $this->_model->with('order_items')->find($id);
     }
 
     public function getUserOrders($userId)
     {
-        return $this->_model->where('user_id', $userId)->get();
+        return $this->_model->where('user_id', $userId)->latest('updated_at')->get();
     }
 }
 

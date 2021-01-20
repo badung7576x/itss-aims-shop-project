@@ -4,6 +4,7 @@ namespace Modules\Web\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Modules\Web\Http\Requests\CheckoutRequest;
 use Modules\Web\Services\CartService;
 use Modules\Web\Services\CheckoutService;
 use Modules\Web\Services\ProductService;
@@ -37,16 +38,16 @@ class CheckoutController extends WebBaseController
         }
 
         $totalAmount = $this->cartService->getTotalAmountInCart($itemsInCart);
-        $shipInfo = $this->checkoutService->getShipInfo();
+        $shipInfo = $this->shipInfoService->getShipInfo();
 
         return view('web::checkout.index', compact('itemsInCart', 'totalAmount', 'shipInfo'));
     }
 
-    public function postCheckout(Request $request) {
+    public function postCheckout(CheckoutRequest $request) {
         $shipInfoType = $request->get('type');
-        $shipInfoData = $request->only(['name', 'email', 'phone_number', 'province', 'address']);
+        $shipInfoData = $request->only(['receiver_name', 'receiver_email', 'receiver_phone_number', 'province', 'address']);
 
-        if ($shipInfoType == 1) {
+        if ($shipInfoType === 1) {
             $shipInfo = $this->checkoutService->saveShipInfo($shipInfoData);
         } else {
             $shipInfo = $this->checkoutService->saveShipInfo($shipInfoData, $request->get('id'));

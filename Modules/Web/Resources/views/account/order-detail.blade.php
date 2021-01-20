@@ -4,7 +4,7 @@
         <div class="bg-gray-200 space-bottom-3">
             <div class="container">
                 <div class="py-5 py-lg-7">
-                    <h6 class="font-weight-medium font-size-7 text-center mt-lg-1">Đặt hàng thành công</h6>
+                    <h6 class="font-weight-medium font-size-7 text-center mt-lg-1">Chi tiết đơn hàng</h6>
                 </div>
                 <div class="max-width-890 mx-auto">
                     <div class="bg-white pt-6 border">
@@ -47,6 +47,10 @@
                         <div class="border-bottom mb-5 pb-5">
                             <ul class="list-unstyled px-3 pl-md-5 pr-md-4 mb-0">
                                 <li class="d-flex justify-content-between py-2">
+                                    <span class="font-weight-medium font-size-2">Phí mua hàng:</span>
+                                    <span class="font-weight-medium font-size-2">{{\App\Helpers\format_currency($order->order_amount)}}</span>
+                                </li>
+                                <li class="d-flex justify-content-between py-2">
                                     <span class="font-weight-medium font-size-2">Phí vận chuyển:</span>
                                     <span class="font-weight-medium font-size-2">@if($order->shipping_amount == 0) Miễn phí vận chuyển @else {{\App\Helpers\format_currency($order->shipping_amount)}} @endif</span>
                                 </li>
@@ -54,13 +58,21 @@
                                     <span class="font-weight-medium font-size-2">Phương thức thanh toán:</span>
                                     <span class="font-weight-medium font-size-2">Thanh toán bằng thẻ tín dụng</span>
                                 </li>
+                                <li class="d-flex justify-content-between pt-2">
+                                    <span class="font-weight-medium font-size-2">Trạng thái thanh toán:</span>
+                                    <span class="font-weight-medium font-size-2">{{PAYMENT_STATUS_MESSAGES[$order->payment_status]}}</span>
+                                </li>
+                                <li class="d-flex justify-content-between pt-2">
+                                    <span class="font-weight-medium font-size-2">Trạng thái đơn hàng:</span>
+                                    <span class="font-weight-medium font-size-2">{{ORDER_STATUS_MESSAGES[$order->order_status]}}</span>
+                                </li>
                             </ul>
                         </div>
                         <div class="border-bottom mb-5 pb-4">
                             <div class="px-3 pl-md-5 pr-md-4">
                                 <div class="d-flex justify-content-between">
-                                    <span class="font-size-2 font-weight-medium">Tổng tiền:</span>
-                                    <span class="font-weight-medium fon-size-2">{{\App\Helpers\format_currency($order->order_amount)}}</span>
+                                    <span class="font-size-2 font-weight-medium">Tổng tiền (Bao gồm VAT):</span>
+                                    <span class="font-weight-medium fon-size-2">{{\App\Helpers\format_currency($order->order_amount * VAT + $order->shipping_amount)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -71,9 +83,9 @@
                                         <h6 class="font-weight-medium font-size-22 mb-3">Người đặt hàng
                                         </h6>
                                         <address class="d-flex flex-column mb-0">
-                                            <span class="text-gray-600 font-size-2">{{$user->name}}</span>
-                                            <span class="text-gray-600 font-size-2">{{$user->email}}</span>
-                                            <span class="text-gray-600 font-size-2">{{$user->phone_number}}</span>
+                                            <span class="text-gray-600 font-size-2">Tên: {{$user->name}}</span>
+                                            <span class="text-gray-600 font-size-2">Email: {{$user->email}}</span>
+                                            <span class="text-gray-600 font-size-2">Số điện thoại: {{$user->phone_number}}</span>
                                         </address>
                                     </div>
                                 </div>
@@ -81,10 +93,11 @@
                                     <h6 class="font-weight-medium font-size-22 mb-3">Người nhận hàng
                                     </h6>
                                     <address class="d-flex flex-column mb-0">
-                                        <span class="text-gray-600 font-size-2">{{$shipInfo->receiver_name}}</span>
-                                        <span class="text-gray-600 font-size-2">{{$shipInfo->receiver_email}}</span>
-                                        <span class="text-gray-600 font-size-2">{{$shipInfo->receiver_phone_number}}</span>
-                                        <span class="text-gray-600 font-size-2">{{$shipInfo->address}}</span>
+                                        <span class="text-gray-600 font-size-2">Tên: {{$shipInfo->receiver_name}}</span>
+                                        <span class="text-gray-600 font-size-2">Email: {{$shipInfo->receiver_email}}</span>
+                                        <span class="text-gray-600 font-size-2">Số điện thoại: {{$shipInfo->receiver_phone_number}}</span>
+                                        <span class="text-gray-600 font-size-2">Khu vực: {{$shipInfo->province}}</span>
+                                        <span class="text-gray-600 font-size-2">Địa chỉ: {{$shipInfo->address}}</span>
                                     </address>
                                 </div>
                             </div>

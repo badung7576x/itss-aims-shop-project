@@ -6,15 +6,18 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Modules\Admin\Http\Requests\ProductCRUDRequest;
+use Modules\Admin\Services\ActionHistoryService;
 use Modules\Admin\Services\ProductService;
 
 class ProductController extends Controller
 {
     protected ProductService $productService;
+    protected ActionHistoryService $historyService;
 
-    public function __construct(ProductService $productService)
+    public function __construct(ProductService $productService, ActionHistoryService $historyService)
     {
         $this->productService = $productService;
+        $this->historyService = $historyService;
     }
 
     /**
@@ -35,9 +38,10 @@ class ProductController extends Controller
         return view('admin::products.create', compact('categories'));
     }
 
-    public function create(ProductCRUDRequest $request) {
-        $this->productService->createProduct($request->all());
-        return redirect()->route('admin.product.list');
+    public function create(Request $request) {
+        $product = $this->productService->createProduct($request->all());
+        $this->historyService->addProductHistory($product);
+        return redirect()->route('admin.product.list')->with(['type' => 'success', 'message' => "Thêm sản phẩm thành công!"]);;
     }
 
     public function renderPropertyForm(Request $request) {
@@ -59,16 +63,25 @@ class ProductController extends Controller
     }
 
     public function edit(ProductCRUDRequest $request) {
-        $this->productService->updateProduct($request->all());
-        return redirect()->route('admin.product.list');
+        if(!$this->historyService->checkHistory('edit_product')) {
+            return back()->with(['type' => 'error', 'message' => "Thao tác vượt quá giới hạn cho phép trong ngày!"]);;
+        }
+        $product = $this->productService->updateProduct($request->all());
+        $this->historyService->editProductHistory($product);
+        return redirect()->route('admin.product.list')->with(['type' => 'success', 'message' => "Cập nhật sản phẩm thành công!"]);
     }
 
     public function delete(Request $request) {
         $ids = $request->get('ids');
-        if(empty($ids)) return back();
+        if(empty($ids)) return back()->with(['type' => 'error', 'message' => "Bạn chưa lựa chọn sản phẩm!"]);
+        if(count($ids) >= 10) return back()->with(['type' => 'error', 'message' => "Số lượng vượt quá giới hạn cho phép trong một lần xóa!"]);
+        if(!$this->historyService->checkHistory('delete_product')) {
+            return back()->with(['type' => 'error', 'message' => "Thao tác vượt quá giới hạn cho phép trong ngày!"]);
+        }
         $this->productService->deleteMultiProduct($ids);
+        $this->historyService->deleteProductsHistory($ids);
 
-        return redirect()->route('admin.product.list');
+        return redirect()->route('admin.product.list')->with(['type' => 'success', 'message' => "Xóa sản phẩm thành công!"]);
     }
 
     public function showChoosePromotion($productId)

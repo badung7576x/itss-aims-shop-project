@@ -56,7 +56,7 @@
                 <li class="nav-item menu-open">
                     <a href="#" class="nav-link
                         {{ (request()->is('admin/promotion*')) ?  'active' : '' }}">
-                        <i class="nav-icon fas fa-box"></i>
+                        <i class="nav-icon fas fa-percent"></i>
                         <p> Khuyến mại
                             <i class="right fas fa-angle-left"></i>
                         </p>
@@ -77,11 +77,9 @@
                     </ul>
                 </li>
                 <li class="nav-item menu-open">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-box"></i>
-                        <p> Lịch sử hoạt động
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
+                    <a href="{{route('admin.histories')}}" class="nav-link {{ (request()->is('admin/histories')) ?  'active' : '' }}">
+                        <i class="nav-icon fas fa-history"></i>
+                        <p> Lịch sử hoạt động</p>
                     </a>
                 </li>
 

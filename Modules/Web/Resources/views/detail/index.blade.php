@@ -33,8 +33,6 @@
                                                     <span class="fas fa-star"></span>
                                                     <span class="fas fa-star"></span>
                                                 </span>
-{{--                                                <span class="ml-3 font-weight-medium">By </span>--}}
-{{--                                                <span class="ml-2 text-gray-600">Anna Banks</span>--}}
                                             </div>
 
                                             <div>
@@ -43,10 +41,12 @@
                                                     <table class="table table-hover table-borderless">
                                                         <tbody>
                                                         @foreach($product->properties as $property)
+                                                        @if($property->property_type->filterable == 0)
                                                         <tr>
                                                             <th width="25%">{{$property->property_type->property_name}}</th>
                                                             <td>{{$property->value}}</td>
                                                         </tr>
+                                                        @endif
                                                         @endforeach
                                                         </tbody>
                                                     </table>
@@ -63,7 +63,7 @@
                                                 </span>
                                             </p>
 
-                                            <div class="cart d-md-flex align-items-center" method="post" enctype="multipart/form-data">
+                                            <div class="cart d-md-flex align-items-center" method="post">
                                                 <div class="quantity mb-4 mb-md-0 d-flex align-items-center">
                                                     <!-- Quantity -->
                                                     <div class="border px-3 width-120">
@@ -71,7 +71,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <label class="screen-reader-text sr-only">Số lượng</label>
                                                                 <span class="js-minus text-dark" id="decrement"><i class="fas fa-minus"></i></span>
-                                                                <input type="text" class="input-text qty text js-result form-control text-center border-0" pattern="[\d]" id="quantity" name="quantity" value="1" />
+                                                                <input type="text" class="input-text qty text js-result form-control text-center border-0" pattern="[\d]" id="quantity" name="quantity" value="1" readonly />
                                                                 <span class="js-plus text-dark" id="increment"><i class="fas fa-plus"></i></span>
                                                             </div>
                                                         </div>

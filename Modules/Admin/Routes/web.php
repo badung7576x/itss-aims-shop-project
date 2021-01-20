@@ -27,11 +27,12 @@ Route::group(['prefix' => 'admin', 'middleware'=>'web', 'namespace' => '\Modules
         Route::get('/product-edit/{id}', 'ProductController@showEditForm')->name('admin.product.edit');
         Route::get('/product-promotion/{id}', 'ProductController@showChoosePromotion')->name('admin.product.promotion');
         Route::get('/product-promotion/update', 'ProductController@updateChoosePromotion ')->name('admin.product.promotionUpdate');
-        
+
         Route::post('/product-edit', 'ProductController@edit')->name('admin.product.post-edit');
         Route::post('/product-delete', 'ProductController@delete')->name('admin.product.post-delete');
         Route::get('/product-detail/{id}', 'ProductController@detail')->name('admin.product.detail');
         Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+        Route::get('/histories', 'ActionHistoryController@index')->name('admin.histories');
         Route::resource('promotion', 'PromotionController');
     });
 

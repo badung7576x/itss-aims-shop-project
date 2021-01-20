@@ -8,6 +8,10 @@ use App\Repositories\Cart\CartInterface;
 use App\Repositories\Cart\CartRepository;
 use App\Repositories\Category\CategoryInterface;
 use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Order\OrderInterface;
+use App\Repositories\Order\OrderRepository;
+use App\Repositories\Payment\PaymentInterface;
+use App\Repositories\Payment\PaymentRepository;
 use App\Repositories\Product\AdminProductInterface;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\WebProductInterface;
@@ -19,8 +23,6 @@ use App\Repositories\PropertyType\PropertyTypeInterface;
 use App\Repositories\PropertyType\PropertyTypeRepository;
 use App\Repositories\ShipInfo\ShipInfoInterface;
 use App\Repositories\ShipInfo\ShipInfoRepository;
-use App\Repositories\Order\OrderInterface;
-use App\Repositories\Order\OrderRepository;
 use App\Repositories\User\UserInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Warehouse\WarehouseInterface;
@@ -48,6 +50,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(ShipInfoInterface::class, ShipInfoRepository::class);
         $this->app->singleton(OrderInterface::class, OrderRepository::class);
         $this->app->singleton(ActionHistoryInterface::class, ActionHistoryRepository::class);
+        $this->app->singleton(PaymentInterface::class, PaymentRepository::class);
     }
 
     /**
@@ -57,7 +60,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if($this->app->environment('production')) {
+        if ($this->app->environment('production')) {
             \URL::forceScheme('https');
         }
     }

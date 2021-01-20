@@ -11,4 +11,6 @@ interface WarehouseInterface
     function getQuantityRemaining($productId);
 
     function updateOrCreateQuantity($productId, $quantity);
+
+    function backProductQuantity($productId, $backQuantity);
 }

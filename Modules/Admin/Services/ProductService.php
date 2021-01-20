@@ -78,6 +78,7 @@ class ProductService
         } else {
             DB::rollBack();
         }
+        return $result;
     }
 
     public function updateProduct(array $data) {
@@ -107,6 +108,7 @@ class ProductService
         } else {
             DB::rollBack();
         }
+        return $result;
     }
 
     public function getProductById($id) {

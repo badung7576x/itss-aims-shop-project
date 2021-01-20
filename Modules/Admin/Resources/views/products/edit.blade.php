@@ -21,9 +21,7 @@
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <h3 class="card-title">
-                                    <a href="javascript:;" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
-                                </h3>
+                                <a href="javascript:;" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
                             </h3>
                         </div>
                         <!-- /.card-header -->
@@ -104,4 +102,20 @@
             </div>
         </section>
     </div>
+    <script>
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        if('{{session('message')}}' != '') {
+            if('{{session('type')}}' == 'error') {
+                toastr.error('{{session('message')}}');
+            } else if ('{{session('type')}}' == 'success') {
+                toastr.success('{{session('message')}}');
+            }
+
+        }
+    </script>
 @endsection

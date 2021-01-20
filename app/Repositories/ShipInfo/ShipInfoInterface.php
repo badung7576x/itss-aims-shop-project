@@ -11,4 +11,6 @@ interface ShipInfoInterface
     public function getShipInfo();
 
     public function update($id, array $attributes);
+
+    public function getShipInfoById($id);
 }

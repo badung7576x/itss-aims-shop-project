@@ -28,31 +28,47 @@
                                                         @if(!empty($shipInfo))
                                                             <input type="hidden" name="id" value="{{$shipInfo->id}}">
                                                         @endif
-                                                        <input type="text" class="input-text form-control" name="name" placeholder="Nhập họ tên người nhận" value="{{$shipInfo->receiver_name ?? ""}}" required>
+                                                        <input type="text" class="input-text form-control" name="receiver_name" placeholder="Nhập họ tên người nhận" value="{{old('receiver_name', $shipInfo->receiver_name ?? "")}}" required>
+                                                        @error('receiver_name')
+                                                            <span style="color: red">{{$message}}</span>
+                                                        @enderror
                                                     </p>
                                                     <p class="col-12 mb-4d75 form-row form-row-wide" id="billing_company_field" data-priority="30">
                                                         <label class="form-label">Email <span style="color: red">*</span></label>
-                                                        <input type="email" class="input-text form-control" name="email" value="{{$shipInfo->receiver_email ?? ""}}" placeholder="Nhập email liên hệ">
+                                                        <input type="email" class="input-text form-control" name="receiver_email" value="{{old('receiver_email', $shipInfo->receiver_email ?? "")}}" placeholder="Nhập email liên hệ">
+                                                        @error('receiver_email')
+                                                        <span style="color: red">{{$message}}</span>
+                                                        @enderror
                                                     </p>
                                                     <p class="col-12 mb-4d75 form-row form-row-wide" id="billing_company_field" data-priority="30">
                                                         <label class="form-label">Phone number <span style="color: red">*</span></label>
-                                                        <input type="text" class="input-text form-control" name="phone_number" value="{{$shipInfo->receiver_phone_number ?? ""}}" placeholder="Nhập số điện thoại người nhận">
+                                                        <input type="text" class="input-text form-control" name="receiver_phone_number" value="{{old('receiver_phone_number', $shipInfo->receiver_phone_number ?? "")}}" placeholder="Nhập số điện thoại người nhận">
+                                                        @error('receiver_phone_number')
+                                                        <span style="color: red">{{$message}}</span>
+                                                        @enderror
                                                     </p>
                                                     <p class="col-12 mb-4d75 form-row form-row-wide address-field update_totals_on_change validate-required woocommerce-validated">
                                                         <label class="form-label">Tỉnh/Thành phố <span style="color: red">*</span></label>
                                                         <select name="province" class="form-control" tabindex="-1">
                                                             <option value="">Chọn tỉnh/thành phố</option>
-                                                            <option value="hn" @if($shipInfo->province ?? "" == "hn") selected @endif>Hà Nội</option>
-                                                            <option value="hcm" @if($shipInfo->province ?? "" == "hcm") selected @endif>Hồ Chí Minh</option>
+                                                            @foreach(ADDRESS as $add)
+                                                                <option value="{{$add}}" @if(old('province', '') == $add || ($shipInfo->province ?? "") == $add) selected @endif>{{$add}}</option>
+                                                            @endforeach
                                                         </select>
+                                                        @error('province')
+                                                        <span style="color: red">{{$message}}</span>
+                                                        @enderror
                                                     </p>
                                                     <p class="col-12 mb-3 form-row form-row-wide address-field validate-required" id="billing_address_1_field" data-priority="50">
                                                         <label class="form-label">Địa chỉ <span style="color: red">*</span></label>
-                                                        <input type="text" class="input-text form-control" name="address" value="{{$shipInfo->receiver_phone_number ?? ""}}" placeholder="Địa chỉ cụ thể khi nhận hàng">
+                                                        <input type="text" class="input-text form-control" name="address" value="{{old('address', $shipInfo->address ?? "")}}" placeholder="Địa chỉ cụ thể khi nhận hàng">
+                                                        @error('address')
+                                                        <span style="color: red">{{$message}}</span>
+                                                        @enderror
                                                     </p>
                                                     <p class="col-12 mb-3 form-row form-row-wide address-field validate-required">
                                                         <label class="form-label">Ghi chú (không bắt buộc)</label>
-                                                        <textarea name="note" class="input-text form-control" placeholder="Thêm ghi chú cho đơn hàng của bạn" rows="8" cols="5"></textarea>
+                                                        <textarea name="note" class="input-text form-control" placeholder="Thêm ghi chú cho đơn hàng của bạn" rows="8" cols="5">{{old('note', '')}}</textarea>
                                                     </p>
                                                 </div>
                                             </div>

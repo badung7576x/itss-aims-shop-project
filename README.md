@@ -7,6 +7,60 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+
+## Project installation guide
+#### Step 1: Clone this repository
+
+```
+$ git clone https://github.com/badung7576x/itss-aims-shop-project.git
+```
+
+#### Step 2: Install library 
+
+```
+$ composer install 
+```
+
+#### Step 3: Create .env 
+
+```
+$ cp .env.example .env
+$ php artisan key:generate 
+```
+
+#### Step 4: Make your database in local and setup env
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your-database
+DB_USERNAME=your-username
+DB_PASSWORD=your-pasaword
+```
+
+#### Step 5: Create table with data
+```
+$ php artisan migrate --seed
+```
+#### Step 6: Run server (default-port: 8000)
+
+```
+$ php artisan serve 
+```
+
+#### Demo 
+
+Run 127.0.0.1:8000 -> Website aims
+
+Run 127.0.0.1:8000/admin/dashboard -> Administrator system
+
+Login information: 
+
+- Email: admin@gmail.com
+
+- Password: admin123
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

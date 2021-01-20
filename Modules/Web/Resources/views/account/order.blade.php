@@ -52,7 +52,7 @@
                                     <tr class="border">
                                         <th class="pl-3 pl-md-5 font-weight-normal align-middle py-6">{{$order->order_no}}</th>
                                         <td class="align-middle py-5">{{$order->ordered_at}}</td>
-                                        <td class="align-middle py-5">{{\App\Helpers\format_currency($order->order_amount)}}</td>
+                                        <td class="align-middle py-5">{{\App\Helpers\format_currency($order->order_amount * VAT + $order->shipping_amount)}}</td>
                                         <td class="align-middle py-5">{{ORDER_STATUS_MESSAGES[$order->order_status]}}</td>
                                         <td class="align-middle py-5">
                                             <div class="d-flex justify-content-center">

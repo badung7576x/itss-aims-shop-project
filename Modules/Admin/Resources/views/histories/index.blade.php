@@ -17,13 +17,16 @@
             <div class="row">
                 <div class="col-10 offset-1">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title"></h3>
+{{--                        <div class="card-header">--}}
+{{--                            <h3 class="card-title"></h3>--}}
 {{--                            <div class="card-tools">{{$histories->links()}}</div>--}}
-                        </div>
+{{--                        </div>--}}
                         <!-- ./card-header -->
                         <div class="card-body p-0">
                             <table class="table table-hover">
+                                @if(count($histories) <= 0)
+                                    <h4 class="text-danger text-center">Lịch sử hoạt động trống</h4>
+                                @else
                                 @foreach($histories as $key => $history)
                                     <tr data-widget="expandable-table" aria-expanded="false">
                                         <td>
@@ -54,6 +57,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                @endif
                                 </tbody>
                             </table>
                         </div>

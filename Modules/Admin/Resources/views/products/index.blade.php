@@ -193,11 +193,13 @@
                         "targets": 7,
                         "className": "text-center align-middle",
                         "render": ( data, type, row ) => {
-                            return `
-                                ${ row. status == 1 ?
-                                    "<span class='badge badge-success'>Hiển thị</span>" :
-                                    "<span class='badge badge-warning'>Không hiển thị</span>"}
-                                `;
+                            if (row. status == 1) {
+                                return ` ${ "<span class='badge badge-success'>Hiển thị</span>"}`;
+                            } else if (row. status == 3) {
+                                return ` ${ "<span class='badge badge-primary'>Khuyến mại</span>"}`;
+                            } else {
+                                return ` ${ "<span class='badge badge-warning'>Không hiển thị</span>"}`;
+                            }
                         },
                     },
                     {

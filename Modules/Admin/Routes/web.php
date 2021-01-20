@@ -26,14 +26,15 @@ Route::group(['prefix' => 'admin', 'middleware'=>'web', 'namespace' => '\Modules
         Route::get('/render-property-form', 'ProductController@renderPropertyForm')->name('admin.product.renderform');
         Route::get('/product-edit/{id}', 'ProductController@showEditForm')->name('admin.product.edit');
         Route::get('/product-promotion/{id}', 'ProductController@showChoosePromotion')->name('admin.product.promotion');
-        Route::get('/product-promotion/update', 'ProductController@updateChoosePromotion ')->name('admin.product.promotionUpdate');
-
+        Route::post('/product-promotion/update', 'ProductController@updateChoosePromotion')->name('admin.product.promotionUpdate');
+        Route::post('/product-promotion/add-product-to-promotion', 'ProductController@addProductToPromotion')->name('admin.product.addToPromotion');
         Route::post('/product-edit', 'ProductController@edit')->name('admin.product.post-edit');
         Route::post('/product-delete', 'ProductController@delete')->name('admin.product.post-delete');
         Route::get('/product-detail/{id}', 'ProductController@detail')->name('admin.product.detail');
         Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
         Route::get('/histories', 'ActionHistoryController@index')->name('admin.histories');
         Route::resource('promotion', 'PromotionController');
+        Route::get('/product-promotion/promotion-detail/{id}/delete', 'PromotionController@destroyPromotionDetail')->name('admin.product.promotion-detail.delete');
     });
 
 });

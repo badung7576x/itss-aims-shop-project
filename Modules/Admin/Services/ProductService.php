@@ -3,7 +3,7 @@
 
 namespace Modules\Admin\Services;
 
-
+use App\Entities\PromotionDetail;
 use App\Repositories\Category\CategoryInterface;
 use App\Repositories\Product\AdminProductInterface;
 use App\Repositories\Property\PropertyInterface;
@@ -146,23 +146,16 @@ class ProductService
     }
 
     public function updatePromotion(array $data, $id) {
-        return $promotion =  $this->promotionInterface->update( $id, $data);
-        dd($promotion);
-        // return  $promotion =  $this->promotionInterface->getPromotionById($id)->update([
-        //     'type' => $data['type'],
-        //     'name' => $data['name'],
-        //     'description' => $data['description'],
-        //     'discount' => $data['discount'],
-        //     'product_id' => $data['product_id'],
-        //     'category_id' => $data['category_id'],
-        //     'num_product_discount' => $data['num_product_discount'],
-        //     'start_at' => $data['start_at'],
-        //     'end_at' => $data['end_at'],
-        // ]);
+        return $promotion =  $this->promotionInterface->update($id, $data);
     }
 
     public function deletePromotion($id)
     {
         $this->promotionInterface->deletePromotion($id);
+    }
+
+    public function addProductToPromotion(array $data)
+    {
+       return PromotionDetail::create($data);
     }
 }

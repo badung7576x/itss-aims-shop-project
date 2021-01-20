@@ -56,8 +56,15 @@
 
                                             <p class="price font-size-22 font-weight-medium mb-4 ml-2">
                                                 <span class="woocommerce-Price-amount amount">
-                                                    {{\App\Helpers\format_currency($product->price)}}
+                                                    @if ($promotionDetail->first())
+                                                        Giá áp dụng chương trình khuyến mại : <br> {{\App\Helpers\format_currency(\App\Helpers\cal_price_promotion($product->price, $promotionDetail->first()->promotion->discount))}}
+                                                        <input hidden type="text" id="promotion_price" name="promotion_price" value="{{\App\Helpers\cal_price_promotion($product->price, $promotionDetail->first()->promotion->discount)}}" />
+                                                    @else
+                                                        {{\App\Helpers\format_currency($product->price)}}
+                                                        <input hidden type="text" id="promotion_price" name="promotion_price" value="0" />
+                                                    @endif
                                                 </span>
+                                                
                                                 <span class="woocommerce-Price-amount amount ml-1" style="text-decoration: line-through; color: red">
                                                     {{\App\Helpers\format_currency($product->value)}}
                                                 </span>
@@ -95,13 +102,15 @@
     <script>
         function addCart(id) {
             let currentQuantity = $("#quantity").val();
+            let promotionPrice = $("#promotion_price").val();
             $.ajax({
                 url: "{{route('product.add-cart')}}",
                 type:'post',
                 data: {
                     _token: '{{ csrf_token() }}',
                     product_id: id,
-                    quantity: currentQuantity
+                    quantity: currentQuantity,
+                    promotion_price: promotionPrice
                 },
                 success: function(result){
                     if(result.status) {

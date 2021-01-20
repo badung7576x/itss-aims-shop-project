@@ -38,7 +38,7 @@ class CartService
         if(empty($itemInCart)) {
             $cartInfo = [
                 'quantity' => $request->get('quantity'),
-                'promotion_id' => null
+                'promotion_price' => $request->get('promotion_price')
             ];
             $cartInfo = array_merge($cartInfo, $where);
             $this->cartInterface->create($cartInfo);
@@ -87,7 +87,11 @@ class CartService
 
     public function getTotalAmountInCart($itemsInCart) {
         return collect($itemsInCart)->sum(function($item){
-            return $item->product->price * $item->quantity;
+            if ($item->promotion_price == 0) {
+                return $item->product->price * $item->quantity;
+            } else {
+                return $item->promotion_price * $item->quantity;
+            }
         });
     }
 

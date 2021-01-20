@@ -18,7 +18,7 @@ class CreateCartsTable extends Migration
             $table->integer('user_id');
             $table->integer('product_id');
             $table->integer('quantity');
-            $table->integer('promotion_id')->nullable();
+            $table->integer('promotion_price')->nullable();
             $table->timestamps();
         });
     }

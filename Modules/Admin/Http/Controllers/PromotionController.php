@@ -3,6 +3,7 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Entities\Product;
+use App\Entities\Promotion;
 use App\Entities\PromotionDetail;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Validation\Validator;
@@ -105,6 +106,11 @@ class PromotionController extends Controller
     {
         $promotionDetail = PromotionDetail::findOrFail($id);
         $promotionID = $promotionDetail->promotion_id;
+        $promotion = Promotion::findOrFail($promotionID);
+        $numProductDiscount =$promotion->num_product_discount - $promotionDetail->num_product_discount;
+        $promotion->update([
+            'num_product_discount' => $numProductDiscount,
+        ]);
         $product = Product::findOrFail($promotionDetail->product_id)->update([
             'status' => 1,
         ]);

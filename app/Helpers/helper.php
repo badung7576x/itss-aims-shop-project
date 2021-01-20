@@ -40,3 +40,11 @@ if (!function_exists('cal_price_promotion')) {
         return $price*(100-$discount)/100;
     }
 }
+
+if (!function_exists('cal_percent')) {
+
+    function cal_percent($num1, $num2)
+    {
+        return $num1/$num2*100;
+    }
+}

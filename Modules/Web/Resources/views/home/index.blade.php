@@ -131,7 +131,7 @@
                                             <h2 class="woocommerce-loop-product__title h6 text-lh-md mb-1 text-height-2 crop-text-2 h-dark">
                                                 <a href="{{route('product.detail', $promotionDetail->product_id ?? NULL)}}">{{\App\Entities\Product::find($promotionDetail->product_id)->title}}</a>
                                             </h2>
-                                            <div class="font-size-2 mb-1 text-truncate">Số lượng : {{$promotionDetail->num_product_discount}} sản phẩm</div>
+                                            <div class="font-size-2 mb-1 text-truncate">Số lượng còn lại : {{$promotionDetail->num_product_discount - $promotionDetail->num_product_sell ?? 0 }} sản phẩm</div>
                                             <div class="price d-flex align-items-center font-weight-medium font-size-3 mb-3">
                                                 <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol"></span>{{\App\Helpers\format_currency(\App\Helpers\cal_price_promotion(\App\Entities\Product::find($promotionDetail->product_id)->price, $promotion->discount))}}</span>
                                             </div>
@@ -140,7 +140,7 @@
                                                     <span>Giá gốc : {{\App\Helpers\format_currency(\App\Entities\Product::find($promotionDetail->product_id)->price)}}</span>
                                                 </div>
                                                 <div class="progress height-7">
-                                                    <div class="progress-bar bg-dark" role="progressbar" style="width: 82%;" aria-valuenow="14" aria-valuemin="0" aria-valuemax="17"></div>
+                                                    <div id="progressbar" class="progress-bar bg-dark" role="progressbar" style="width: 82%;" aria-valuenow="{{$promotionDetail->num_product_sell ?? 0}}" aria-valuemin="0" aria-valuemax="{{$promotionDetail->num_product_discount}}"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -181,7 +181,7 @@
             var hours = Math.floor((time % (1000*60*60*24))/(1000*60*60));  
             var minutes = Math.floor((time - hours*(1000*60*60) - date*(1000*60*60*24))/(1000*60));  
             var seconds = Math.floor((time - hours*(1000*60*60) - date*(1000*60*60*24) -minutes*1000*60 )/(1000));  
-            var clockTime ="Khuyến mại còn : " + date + " ngày " + hours + ' giờ ' + minutes + ' phút ' + seconds + ' giây'  ;
+            var clockTime = date + " ngày " + hours + ' giờ ' + minutes + ' phút ' + seconds + ' giây'  ;
             return clockTime;
         }
         var updateTimeCounter = function()
@@ -194,10 +194,10 @@
             if (start - currentTime > 0) {
                 var clockTime = "Khuyến mại bắt đầu sau : " + calTime(start - currentTime);
             } else {
-                var clockTime = calTime(end - currentTime);
+                var clockTime = "Khuyến mại còn : " + calTime(end - currentTime);
             }
             clock.innerText = clockTime;
-        };
+        }; 
         var oneSecond = 1000;
         setInterval( updateTimeCounter, oneSecond);
     </script>

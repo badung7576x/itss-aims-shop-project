@@ -39,7 +39,12 @@
                                             </div>
                                             <span class="font-size-2 ml-4 ml-md-8">x{{$item->quantity}}</span>
                                         </div>
+                                        @if ($item->promotion_price == 0)
                                         <span class="font-weight-medium font-size-2">{{\App\Helpers\calculate_total_price($item->quantity, $item->product->price)}}</span>
+                                        @else
+                                        <span class="font-weight-medium font-size-2">{{\App\Helpers\calculate_total_price($item->quantity, $item->promotion_price)}}</span>
+                                        @endif
+                                        
                                     </div>
                                     @endforeach
                                 </div>

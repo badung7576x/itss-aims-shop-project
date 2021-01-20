@@ -10,7 +10,7 @@ class OrderLine extends Model
     protected $table = 'order_lines';
 
     protected $fillable = [
-        'order_id', 'product_id', 'quantity', 'price', 'promotion_id'
+        'order_id', 'product_id', 'quantity', 'price', 'promotion_price'
     ];
 
     public function product() {

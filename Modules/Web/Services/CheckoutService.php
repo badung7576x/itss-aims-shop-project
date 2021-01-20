@@ -126,7 +126,11 @@ class CheckoutService
 
     private function _getTotalAmount($itemsInCart) {
         return collect($itemsInCart)->sum(function ($item) {
-            return $item->product->price * $item->quantity;
+            if ($item->promotion_price != 0) {
+                return $item->promotion_price * $item->quantity;
+            } else {
+                return $item->product->price * $item->quantity;
+            }       
         });
     }
 

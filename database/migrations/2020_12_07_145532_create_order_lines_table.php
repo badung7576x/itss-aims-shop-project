@@ -19,7 +19,7 @@ class CreateOrderLinesTable extends Migration
             $table->integer('product_id');
             $table->integer('quantity');
             $table->integer('price');
-            $table->integer('promotion_id')->nullable();
+            $table->integer('promotion_price')->nullable();
             $table->timestamps();
         });
     }

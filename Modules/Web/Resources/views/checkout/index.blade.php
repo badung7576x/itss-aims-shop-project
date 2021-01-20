@@ -131,7 +131,11 @@
                                                                     {{$item->product->title}}&nbsp; <strong class="product-quantity">X {{$item->quantity}}</strong>
                                                                 </td>
                                                                 <td class="product-total">
+                                                                    @if ($item->promotion_price == 0)
                                                                     <span class="woocommerce-Price-amount amount">{{\App\Helpers\calculate_total_price($item->quantity, $item->product->price)}}</span>
+                                                                    @else
+                                                                    <span class="woocommerce-Price-amount amount">{{\App\Helpers\calculate_total_price($item->quantity, $item->promotion_price)}}</span>
+                                                                    @endif
                                                                 </td>
                                                             </tr>
                                                         @endforeach

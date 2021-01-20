@@ -213,11 +213,19 @@
                             promotionLink = promotionLink.replace(':id', row.id);
                             let detailLink = "{{route('admin.product.detail', ':id')}}";
                             detailLink = detailLink.replace(':id', row.id);
-                            return `
+                            if (row. status == 1) {
+                                return `
                                 <a type='button' href="${editLink}" class='btn btn-outline-warning btn-sm'><i class="fas fa-edit"></i></a>
                                 <a type='button' href="${detailLink}" class='btn btn-outline-success btn-sm'><i class="fas fa-eye"></i></a>
                                 <a type='button' href="${promotionLink}" class='btn btn-outline-danger btn-sm'><i class="fas fa-percentage"></i></a>
-                            `;
+                                `;
+                            } else {
+                                return `
+                                <a type='button' href="${editLink}" class='btn btn-outline-warning btn-sm'><i class="fas fa-edit"></i></a>
+                                <a type='button' href="${detailLink}" class='btn btn-outline-success btn-sm'><i class="fas fa-eye"></i></a>
+                                `;
+                            }
+                           
                         },
                     },
                 ]

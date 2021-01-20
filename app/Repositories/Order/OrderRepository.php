@@ -5,6 +5,7 @@ namespace App\Repositories\Order;
 
 use App\Entities\Order;
 use App\Entities\OrderLine;
+use App\Entities\PromotionDetail;
 use App\Entities\Warehouse;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
@@ -26,13 +27,28 @@ class OrderRepository extends BaseRepository implements OrderInterface
         $order = $this->_model->create($order);
         if(!empty($order)) {
             foreach($items as $item) {
-                $orderItem = [
-                    'order_id' => $order->id,
-                    'product_id' => $item->product_id,
-                    'quantity' => $item->quantity,
-                    'price' => $item->product->price,
-                    'promotion_id' => null
-                ];
+                if ($item->promotion_price == 0) {
+                    $orderItem = [
+                        'order_id' => $order->id,
+                        'product_id' => $item->product_id,
+                        'quantity' => $item->quantity,
+                        'price' => $item->product->price,
+                        'promotion_price' => 0 
+                    ];
+                } else {
+                    $orderItem = [
+                        'order_id' => $order->id,
+                        'product_id' => $item->product_id,
+                        'quantity' => $item->quantity,
+                        'price' => $item->product->price,
+                        'promotion_price' => $item->promotion_price
+                    ];
+                    $promotionDetail = PromotionDetail::where('product_id' ,$item->product_id)->first();
+                    $numSold = $promotionDetail->num_product_sell ?? 0;
+                    $promotionDetail->update([
+                        'num_product_sell' => $numSold +  $item->quantity,
+                    ]);
+                }
                 OrderLine::create($orderItem);
                 Warehouse::where('product_id', $item->product_id)->decrement('quantity', $item->quantity);
             }

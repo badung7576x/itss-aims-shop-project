@@ -60,3 +60,10 @@ Login information:
 - Email: admin@gmail.com
 
 - Password: admin123
+
+
+If you want to try demo online, you can access this domain: [AIMS Shop](https://itss-aims-shop.herokuapp.com/)
+
+User: user01@gmail.com / user01 or register new account
+
+Admin: admin@gmail.com / admin123 
